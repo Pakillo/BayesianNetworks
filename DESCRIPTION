@@ -1,13 +1,29 @@
 Package: BayesianNetworks
-Title: What the Package Does (One Line, Title Case)
+Title: Bayesian Modelling of Bipartite Networks
 Version: 0.0.0.9000
 Authors@R: 
-    person("Francisco", "Rodriguez-Sanchez", , "f.rodriguez.sanc@gmail.com", role = c("aut", "cre"),
-           comment = c(ORCID = "0000-0002-7981-1599"))
-Description: What the package does (one paragraph).
+    c(
+      person("Francisco", "Rodriguez-Sanchez", , "f.rodriguez.sanc@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-7981-1599")),
+      person("Jean-Gabriel", "Young", role = "aut")
+    )
+Description: Bayesian modelling of bipartite network structure, following the approach
+    of Young et al. <doi:10.1038/s41467-021-24149-x>.
 License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.1
 URL: https://github.com/Pakillo/BayesianNetworks
 BugReports: https://github.com/Pakillo/BayesianNetworks/issues
+Imports:
+    cmdstanr,
+    dplyr,
+    tidybayes
+Suggests:
+    ggplot2,
+    network.tools
+Remotes:
+    Pakillo/network.tools
+Depends: 
+    R (>= 2.10)
+LazyData: true

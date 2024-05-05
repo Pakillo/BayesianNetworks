@@ -10,6 +10,10 @@
 #' @export
 #'
 #' @examples
+#' data(web)
+#' prepare_data(web, sampl.eff = rep(20, nrow(web)))
+#' # assuming equal sampling effort among plants
+#'
 prepare_data <- function(mat = NULL, sampl.eff = NULL) {
 
   ## Checks
@@ -33,6 +37,7 @@ prepare_data <- function(mat = NULL, sampl.eff = NULL) {
 
   ## Data list
   dt <- list(M = mat, n_p = nrow(mat), n_a = ncol(mat), C = sampl.eff)
+  # dt <- tidybayes::compose_data(M = mat, n_p = nrow(mat), n_a = ncol(mat), C = sampl.eff)
 
   dt
 

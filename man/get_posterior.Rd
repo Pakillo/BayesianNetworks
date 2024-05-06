@@ -7,7 +7,8 @@
 get_posterior(
   fit = NULL,
   data = NULL,
-  param = c("connectance", "preference", "plant.abund", "animal.abund", "int.prob")
+  param = c("all", "connectance", "preference", "plant.abund", "animal.abund",
+    "int.prob", "link")
 )
 }
 \arguments{
@@ -37,11 +38,14 @@ int.prob |> tidybayes::mean_qi()  # mean edge probability
 # plot
 int.prob |>
   tidybayes::mean_qi() |>
-  dplyr::select(Plant, Animal, .value) |>
-  network.tools::plot_web_heatmap(int.var = ".value", sort = FALSE)
+  dplyr::select(Plant, Animal, int.prob) |>
+  network.tools::plot_web_heatmap(int.var = "int.prob", sort = FALSE)
 
  # compare with Visits
  web |>
    network.tools::wide2long() |>
    network.tools::plot_web_heatmap(zero.na = FALSE, sort = FALSE)
+
+# all posteriors
+get_posterior(fit, dt, param = "all")
 }

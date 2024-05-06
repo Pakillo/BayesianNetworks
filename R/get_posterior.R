@@ -28,14 +28,19 @@
 #'  web |>
 #'    network.tools::wide2long() |>
 #'    network.tools::plot_web_heatmap(zero.na = FALSE, sort = FALSE)
+#'
+#' # all posteriors
+#' get_posterior(fit, dt, param = "all")
 
 get_posterior <- function(fit = NULL,
                           data = NULL,
-                          param = c("connectance",
+                          param = c("all",
+                                    "connectance",
                                     "preference",
                                     "plant.abund",
                                     "animal.abund",
-                                    "int.prob")) {
+                                    "int.prob",
+                                    "link")) {
 
   # r = avg. visits from mutualists (preference)
   # rho = connectance
@@ -47,11 +52,13 @@ get_posterior <- function(fit = NULL,
 
   post <- switch(
     param,
+    all = tidybayes::spread_draws(fit, rho, r, sigma[Plant], tau[Animal], Q[Plant, Animal]),
     connectance = tidybayes::spread_draws(fit, rho),
     preference = tidybayes::spread_draws(fit, r),
     plant.abund = tidybayes::spread_draws(fit, sigma[Plant]),
     animal.abund = tidybayes::spread_draws(fit, tau[Animal]),
     int.prob = tidybayes::spread_draws(fit, Q[Plant, Animal]),
+    link = tidybayes::spread_draws(fit, Q[Plant, Animal]),
   )
 
   # use more informative names
@@ -62,21 +69,29 @@ get_posterior <- function(fit = NULL,
     animal.abund = "tau",
     int.prob = "Q")
 
-  post <- rename(post, any_of(param.names))
+  post <- dplyr::rename(post, any_of(param.names))
+
+  ## generate posteriors of link existence
+  if (param == "all" | param == "link") {
+    post <- is_there_link(post)
+  }
+
 
 
   ## rename plants and animals with original labels
 
-  if ("Plant" %in% names(post)) {
-    plants <- data.frame(Plant = 1:nrow(data$M), Plant.name = rownames(data$M))
-    post <- post |>
-      dplyr::mutate(Plant = plants$Plant.name[match(Plant, plants$Plant)])
-  }
-
   if ("Animal" %in% names(post)) {
     animals <- data.frame(Animal = 1:ncol(data$M), Animal.name = colnames(data$M))
     post <- post |>
-      dplyr::mutate(Animal = animals$Animal.name[match(Animal, animals$Animal)])
+      dplyr::mutate(Animal = animals$Animal.name[match(Animal, animals$Animal)]) |>
+      dplyr::relocate(Animal)
+  }
+
+  if ("Plant" %in% names(post)) {
+    plants <- data.frame(Plant = 1:nrow(data$M), Plant.name = rownames(data$M))
+    post <- post |>
+      dplyr::mutate(Plant = plants$Plant.name[match(Plant, plants$Plant)]) |>
+      dplyr::relocate(Plant)
   }
 
   return(post)

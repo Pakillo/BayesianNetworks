@@ -21,8 +21,8 @@
 #' # plot
 #' int.prob |>
 #'   tidybayes::mean_qi() |>
-#'   dplyr::select(Plant, Animal, .value) |>
-#'   network.tools::plot_web_heatmap(int.var = ".value", sort = FALSE)
+#'   dplyr::select(Plant, Animal, int.prob) |>
+#'   network.tools::plot_web_heatmap(int.var = "int.prob", sort = FALSE)
 #'
 #'  # compare with Visits
 #'  web |>
@@ -47,24 +47,25 @@ get_posterior <- function(fit = NULL,
 
   post <- switch(
     param,
-    connectance = tidybayes::gather_draws(fit, rho),
-    preference = tidybayes::gather_draws(fit, r),
-    plant.abund = tidybayes::gather_draws(fit, sigma[Plant]),
-    animal.abund = tidybayes::gather_draws(fit, tau[Animal]),
-    int.prob = tidybayes::gather_draws(fit, Q[Plant, Animal]),
+    connectance = tidybayes::spread_draws(fit, rho),
+    preference = tidybayes::spread_draws(fit, r),
+    plant.abund = tidybayes::spread_draws(fit, sigma[Plant]),
+    animal.abund = tidybayes::spread_draws(fit, tau[Animal]),
+    int.prob = tidybayes::spread_draws(fit, Q[Plant, Animal]),
   )
 
-  post <- post |>
-    dplyr::mutate(.variable = dplyr::case_when(
-      .variable == "rho" ~ "connectance",
-      .variable == "r" ~ "preference",
-      .variable == "sigma" ~ "plant.abund",
-      .variable == "tau" ~ "animal.abund",
-      .variable == "Q" ~ "int.prob"
-    ))
+  # use more informative names
+  param.names <- c(
+    connectance = "rho",
+    preference = "r",
+    plant.abund = "sigma",
+    animal.abund = "tau",
+    int.prob = "Q")
+
+  post <- rename(post, any_of(param.names))
 
 
-  ## rename plants and animals
+  ## rename plants and animals with original labels
 
   if ("Plant" %in% names(post)) {
     plants <- data.frame(Plant = 1:nrow(data$M), Plant.name = rownames(data$M))

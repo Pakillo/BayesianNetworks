@@ -4,6 +4,7 @@ data {
   int<lower=1> n_a;
   array[n_p, n_a] int<lower=0> M;
   vector<lower=0> [n_p] C;
+  real<lower=0> beta;  // rate for exponential prior on r parameter
 }
 
 transformed data {
@@ -28,11 +29,11 @@ parameters {
 }
 model {
   // Prior
-  r ~ exponential(0.01);
-  
+  r ~ exponential(beta);
+
   // Global sums and parameters
   target += M_tot * log(C) - C;
-  // Weighted marginals of the data matrix 
+  // Weighted marginals of the data matrix
   for (i in 1:n_p) {
     target += M_rows[i] * log(sigma[i]);
   }
@@ -50,7 +51,7 @@ model {
         target += nu_ij_1 + log1p_exp(nu_ij_0 - nu_ij_1);
     }
   }
-} 
+}
 generated quantities {
   // Posterior edge probability matrix
   array[n_p, n_a] real<lower=0> Q;
@@ -58,7 +59,7 @@ generated quantities {
     for (j in 1:n_a) {
       real nu_ij_0 = log(1 - rho);
       real nu_ij_1 = log(rho) + M[i,j] * log(1 + r) - C[i] * r * sigma[i] * tau[j];
-      if (nu_ij_1 > 0) 
+      if (nu_ij_1 > 0)
         Q[i, j] = 1 / (1+ exp(nu_ij_0 - nu_ij_1));
       else
         Q[i, j] = exp(nu_ij_1) / (exp(nu_ij_0) + exp(nu_ij_1));

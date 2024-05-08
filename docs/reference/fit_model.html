@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BayesianNetworks</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.1</span>
       </span>
     </div>
 
@@ -50,7 +50,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fit_model</span><span class="op">(</span>data <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fit_model</span><span class="op">(</span>data <span class="op">=</span> <span class="cn">NULL</span>, model <span class="op">=</span> <span class="st">"default"</span>, beta <span class="op">=</span> <span class="fl">0.01</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -60,9 +60,22 @@
 <code><a href="prepare_data.html">prepare_data()</a></code>.</p></dd>
 
 
+<dt>model</dt>
+<dd><p>character. Path to file describing the Stan model. Use in case
+you want to use a modified Stan model. Otherwise using "default" model provided
+with the package.</p></dd>
+
+
+<dt>beta</dt>
+<dd><p>Rate of exponential prior on <code>r</code> (preference) parameter.
+Default beta is 0.01. Increase it if you have large count numbers.
+(Could use <code>plot(hist(rexp(1000, rate = beta)))</code> to examine the resultant prior.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Further arguments for <code><a href="https://mc-stan.org/cmdstanr/reference/model-method-sample.html" class="external-link">cmdstanr::sample()</a></code>, like <code>iter_warmup</code>,
-<code>iter_sampling</code>, or <code>thin</code>, among others.</p></dd>
+<code>iter_sampling</code>, or <code>thin</code>, among others. It is recommended to increase the
+number of iterations (e.g. iter_sampling = 10000).</p></dd>
 
 </dl></div>
     <div id="value">
@@ -101,7 +114,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1 Iteration: 1800 / 2000 [ 90%]  (Sampling) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1 Iteration: 1900 / 2000 [ 95%]  (Sampling) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1 Iteration: 2000 / 2000 [100%]  (Sampling) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1 finished in 1.2 seconds.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1 finished in 1.4 seconds.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2 Iteration:    1 / 2000 [  0%]  (Warmup) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2 Iteration:  100 / 2000 [  5%]  (Warmup) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2 Iteration:  200 / 2000 [ 10%]  (Warmup) </span>
@@ -124,7 +137,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2 Iteration: 1800 / 2000 [ 90%]  (Sampling) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2 Iteration: 1900 / 2000 [ 95%]  (Sampling) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2 Iteration: 2000 / 2000 [100%]  (Sampling) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2 finished in 1.2 seconds.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2 finished in 1.4 seconds.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3 Iteration:    1 / 2000 [  0%]  (Warmup) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3 Iteration:  100 / 2000 [  5%]  (Warmup) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3 Iteration:  200 / 2000 [ 10%]  (Warmup) </span>
@@ -147,7 +160,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3 Iteration: 1800 / 2000 [ 90%]  (Sampling) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3 Iteration: 1900 / 2000 [ 95%]  (Sampling) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3 Iteration: 2000 / 2000 [100%]  (Sampling) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3 finished in 1.3 seconds.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3 finished in 1.4 seconds.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4 Iteration:    1 / 2000 [  0%]  (Warmup) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4 Iteration:  100 / 2000 [  5%]  (Warmup) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4 Iteration:  200 / 2000 [ 10%]  (Warmup) </span>
@@ -170,11 +183,11 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4 Iteration: 1800 / 2000 [ 90%]  (Sampling) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4 Iteration: 1900 / 2000 [ 95%]  (Sampling) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4 Iteration: 2000 / 2000 [100%]  (Sampling) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4 finished in 1.4 seconds.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4 finished in 1.6 seconds.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> All 4 chains finished successfully.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Mean chain execution time: 1.3 seconds.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Total execution time: 5.5 seconds.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Mean chain execution time: 1.4 seconds.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Total execution time: 6.1 seconds.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>

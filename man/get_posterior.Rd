@@ -28,8 +28,7 @@ Get posterior values
 data(web)
 dt <- prepare_data(mat = web, sampl.eff = rep(20, nrow(web)))
 fit <- fit_model(dt, refresh = 0)
-connectance <- get_posterior(fit, dt, param = "connectance")
-connectance
+get_posterior(fit, dt, param = "connectance")
 
 int.prob <- get_posterior(fit, dt, param = "int.prob")
 int.prob

@@ -22,5 +22,5 @@ interaction.
 data(web)
 dt <- prepare_data(mat = web, sampl.eff = rep(20, nrow(web)))
 fit <- fit_model(dt, refresh = 0)
-pred <- predict_counts(fit, dt)
+predict_counts(fit, dt)
 }

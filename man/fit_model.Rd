@@ -16,7 +16,7 @@ with the package.}
 
 \item{beta}{Rate of exponential prior on \code{r} (preference) parameter.
 Default beta is 0.01. Increase it if you have large count numbers.
-(Could use \code{plot(hist(rexp(1000, rate = beta)))} to examine the resultant prior.}
+(Could use \code{plot_prior()} to examine the resultant prior.}
 
 \item{...}{Further arguments for \code{cmdstanr::sample()}, like \code{iter_warmup},
 \code{iter_sampling}, or \code{thin}, among others. It is recommended to increase the

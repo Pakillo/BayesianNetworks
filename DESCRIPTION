@@ -1,6 +1,6 @@
 Package: BayesianNetworks
 Title: Bayesian Modelling of Bipartite Networks
-Version: 0.0.1
+Version: 0.0.2
 Authors@R: 
     c(
       person("Francisco", "Rodriguez-Sanchez", , "f.rodriguez.sanc@gmail.com", role = c("aut", "cre"),
@@ -18,10 +18,9 @@ BugReports: https://github.com/Pakillo/BayesianNetworks/issues
 Imports:
     cmdstanr,
     dplyr,
-    tidybayes
-Suggests:
     ggplot2,
-    network.tools
+    network.tools,
+    tidybayes
 Remotes:
     Pakillo/network.tools
 Depends: 

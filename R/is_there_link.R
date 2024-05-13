@@ -12,5 +12,5 @@ is_there_link <- function(df = NULL) {
 
   stopifnot("int.prob" %in% names(df))
   df |>
-    dplyr::mutate(link = rbinom(1, size = 1, prob = int.prob))
+    dplyr::mutate(link = stats::rbinom(1, size = 1, prob = int.prob))
 }

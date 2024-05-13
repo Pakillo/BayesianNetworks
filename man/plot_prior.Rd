@@ -4,20 +4,29 @@
 \alias{plot_prior}
 \title{Plot prior distribution for r (preference) parameter}
 \usage{
-plot_prior(beta = 0.01)
+plot_prior(beta = NULL, fit = NULL)
 }
 \arguments{
 \item{beta}{A number > 0. Rate of the exponential distribution.}
+
+\item{fit}{A fitted model, as obtained from \code{fit_model()}.}
 }
 \value{
 A plot
 }
 \description{
-The r (preference) parameter in Young et al. model takes a prior
+The \code{r} (preference) parameter in Young et al. model takes a prior
 exponential distribution with rate = beta. Use this function to
 visualise the prior distribution of \code{r} given the chosen beta.
+Alternatively, if providing the fitted model, a plot comparing the
+prior versus posterior will be produced.
 }
 \examples{
 plot_prior(beta = 0.01)
 plot_prior(beta = 0.001)
+
+data(web)
+dt <- prepare_data(mat = web, sampl.eff = rep(20, nrow(web)))
+fit <- fit_model(dt)
+plot_prior(fit = fit)
 }

@@ -18,6 +18,8 @@ check_model <- function(fit = NULL) {
 
   fit$cmdstan_diagnose()
 
+  plot_prior(fit = fit)
+
   check_lp(fit)
 
 }
@@ -27,13 +29,17 @@ check_model <- function(fit = NULL) {
 check_lp <- function(fit = NULL) {
   lp <- fit$draws("lp__", format = "df")
 
-  if (requireNamespace("ggplot2")) {
-    ggplot2::ggplot(lp, ggplot2::aes(.draw, lp__, colour = as.factor(.chain))) +
-      ggplot2::geom_point() +
-      ggplot2::theme_minimal() +
-      ggplot2::labs(title = "Log posterior across chains")
-  } else {
-    plot(lp$.draw, lp$lp__)
-  }
+  gg <- ggplot2::ggplot(lp, ggplot2::aes(.draw, lp__, colour = as.factor(.chain))) +
+    ggplot2::geom_point() +
+    ggplot2::theme_minimal() +
+    ggplot2::labs(title = "Log posterior across chains")
+
+  gg
 
 }
+
+
+
+
+
+

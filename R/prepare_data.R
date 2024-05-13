@@ -12,8 +12,7 @@
 #' @examples
 #' data(web)
 #' prepare_data(web, sampl.eff = rep(20, nrow(web)))
-#' # assuming equal sampling effort among plants
-#'
+
 prepare_data <- function(mat = NULL, sampl.eff = NULL) {
 
   ## Checks

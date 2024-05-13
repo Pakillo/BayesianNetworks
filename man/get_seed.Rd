@@ -18,6 +18,6 @@ Get seed used to fit a model
 \examples{
 data(web)
 dt <- prepare_data(mat = web, sampl.eff = rep(20, nrow(web)))
-fit <- fit_model(dt)
+fit <- fit_model(dt, refresh = 0)
 get_seed(fit)
 }

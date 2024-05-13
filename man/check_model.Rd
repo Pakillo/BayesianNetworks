@@ -18,6 +18,6 @@ Check fitted model
 \examples{
 data(web)
 dt <- prepare_data(mat = web, sampl.eff = rep(20, nrow(web)))
-fit <- fit_model(dt)
+fit <- fit_model(dt, refresh = 0)
 check_model(fit)
 }

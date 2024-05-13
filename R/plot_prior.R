@@ -18,7 +18,7 @@
 #'
 #' data(web)
 #' dt <- prepare_data(mat = web, sampl.eff = rep(20, nrow(web)))
-#' fit <- fit_model(dt)
+#' fit <- fit_model(dt, refresh = 0)
 #' plot_prior(fit = fit)
 
 plot_prior <- function(beta = NULL, fit = NULL) {

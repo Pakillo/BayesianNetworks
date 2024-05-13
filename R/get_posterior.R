@@ -17,17 +17,6 @@
 #' int.prob
 #' int.prob |> tidybayes::mean_qi()  # mean edge probability
 #'
-#' # plot
-#' int.prob |>
-#'   tidybayes::mean_qi() |>
-#'   dplyr::select(Plant, Animal, int.prob) |>
-#'   network.tools::plot_web_heatmap(int.var = "int.prob", sort = FALSE)
-#'
-#'  # compare with Visits
-#'  web |>
-#'    network.tools::wide2long() |>
-#'    network.tools::plot_web_heatmap(zero.na = FALSE, sort = FALSE)
-#'
 #' # all posteriors
 #' get_posterior(fit, dt, param = "all")
 

@@ -25,10 +25,22 @@
     <loc>/reference/get_posterior.html</loc>
   </url>
   <url>
+    <loc>/reference/get_seed.html</loc>
+  </url>
+  <url>
     <loc>/reference/index.html</loc>
   </url>
   <url>
-    <loc>/reference/is_there_link.html</loc>
+    <loc>/reference/plot_counts_pred_heat.html</loc>
+  </url>
+  <url>
+    <loc>/reference/plot_counts_pred_obs.html</loc>
+  </url>
+  <url>
+    <loc>/reference/plot_interaction_prob.html</loc>
+  </url>
+  <url>
+    <loc>/reference/plot_prior.html</loc>
   </url>
   <url>
     <loc>/reference/predict_counts.html</loc>

@@ -5,7 +5,7 @@
 #'
 #' @return A data frame with a new column `link` taking values of 0 (no link)
 #' and 1 (link).
-#' @export
+#' @noRd
 #'
 
 is_there_link <- function(df = NULL) {

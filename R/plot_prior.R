@@ -24,10 +24,16 @@
 plot_prior <- function(beta = NULL, fit = NULL) {
 
   if (is.null(fit)) {
-    prior <- stats::rexp(10000, rate = beta)
-    graphics::hist(prior, freq = FALSE, breaks = 100,
-         main = paste0("Prior probability for r (preference) parameter\n",
-                       "with beta = ", beta))
+    if (is.null(beta)) {
+      stop("Please provide either a value for beta or a fitted model")
+    }
+    df <- data.frame(prior = stats::rexp(10000, rate = beta))
+    ggplot2::ggplot(df) +
+      ggplot2::geom_density(ggplot2::aes(prior), bounds = c(0, Inf), fill = "grey40") +
+      ggplot2::theme_minimal() +
+      ggplot2::labs(title = paste0("Prior probability for r (preference) parameter ",
+                          "with beta = ", beta),
+                    x = "")
   }
 
   if (!is.null(fit)) {
@@ -35,15 +41,17 @@ plot_prior <- function(beta = NULL, fit = NULL) {
     if (is.numeric(beta) && !identical(beta, beta.model)) {
       warning("The beta used to fit the model is ", beta.model, ", not ", beta)
     }
-    prior <- stats::rexp(10000, rate = beta.model)
-    post <- get_posterior(fit, param = "preference")$preference
-    post.dens <- graphics::hist(post, breaks = 100, plot = FALSE)
-    post.max <- max(post.dens$density)
+    df.prior <- data.frame(prior = stats::rexp(10000, rate = beta.model))
+    df.post <- get_posterior(fit, param = "preference")[, "preference"]
 
-    graphics::hist(prior, freq = FALSE, breaks = 100, ylim = c(0, post.max),
-         main = "Preference (r) parameter: prior (bars) vs posterior (red line)",
-         xlab = "")
-    graphics::lines(post.dens$mids, post.dens$density, col = "red")
+    ggplot2::ggplot(df.prior) +
+      ggplot2::geom_density(ggplot2::aes(prior), bounds = c(0, Inf), fill = "grey40") +
+      ggplot2::geom_density(ggplot2::aes(preference), bounds = c(0, Inf), fill = "grey90",
+                            data = df.post, alpha = 0.5) +
+      ggplot2::theme_minimal() +
+      ggplot2::labs(title = "Preference (r) parameter: prior (dark grey) vs posterior (light grey) distribution",
+                    x = "")
+
   }
 
 }

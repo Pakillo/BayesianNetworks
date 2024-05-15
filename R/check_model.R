@@ -18,7 +18,7 @@ check_model <- function(fit = NULL) {
 
   fit$cmdstan_diagnose()
 
-  plot_prior(fit = fit)
+  print(plot_prior(fit = fit))
 
   check_lp(fit)
 

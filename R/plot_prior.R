@@ -28,11 +28,11 @@ plot_prior <- function(beta = NULL, fit = NULL) {
       stop("Please provide either a value for beta or a fitted model")
     }
     df <- data.frame(prior = stats::rexp(10000, rate = beta))
-    ggplot2::ggplot(df) +
+    gg <- ggplot2::ggplot(df) +
       ggplot2::geom_density(ggplot2::aes(prior), bounds = c(0, Inf), fill = "grey40") +
       ggplot2::theme_minimal() +
       ggplot2::labs(title = paste0("Prior probability for r (preference) parameter ",
-                          "with beta = ", beta),
+                                   "with beta = ", beta),
                     x = "")
   }
 
@@ -44,7 +44,7 @@ plot_prior <- function(beta = NULL, fit = NULL) {
     df.prior <- data.frame(prior = stats::rexp(10000, rate = beta.model))
     df.post <- get_posterior(fit, param = "preference")[, "preference"]
 
-    ggplot2::ggplot(df.prior) +
+    gg <- ggplot2::ggplot(df.prior) +
       ggplot2::geom_density(ggplot2::aes(prior), bounds = c(0, Inf), fill = "grey40") +
       ggplot2::geom_density(ggplot2::aes(preference), bounds = c(0, Inf), fill = "grey90",
                             data = df.post, alpha = 0.5) +
@@ -53,6 +53,8 @@ plot_prior <- function(beta = NULL, fit = NULL) {
                     x = "")
 
   }
+
+  return(gg)
 
 }
 

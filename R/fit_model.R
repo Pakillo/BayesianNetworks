@@ -1,18 +1,18 @@
 #' Fit model
 #'
 #' @param data A named list containing the required data, as obtained from
-#'  `prepare_data()`.
+#'  [prepare_data()].
 #' @param model character. Path to file describing the Stan model. Use in case
 #' you want to use a modified Stan model. Otherwise using "default" model provided
 #' with the package.
 #' @param beta Rate of exponential prior on `r` (preference) parameter.
 #' Default beta is 0.01. Increase it if you have large count numbers.
-#' (Could use `plot_prior()` to examine the resultant prior.
-#' @param ... Further arguments for `cmdstanr::sample()`, like `iter_warmup`,
+#' (Could use [plot_prior()] to examine the resultant prior.
+#' @param ... Further arguments for [cmdstanr::sample()], like `iter_warmup`,
 #' `iter_sampling`, or `thin`, among others. It is recommended to increase the
 #' number of iterations (e.g. iter_sampling = 10000).
 #'
-#' @return A fitted model (`cmdstanr::CmdStanMCMC()` object).
+#' @return A fitted model ([cmdstanr::CmdStanMCMC()] object).
 #' @export
 #' @import cmdstanr
 #'

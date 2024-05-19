@@ -1,6 +1,6 @@
 #' Check fitted model
 #'
-#' @param fit A fitted model, as obtained from `fit_model()`.
+#' @param fit A fitted model, as obtained from [fit_model()].
 #'
 #' @return Model checks on console and graphical window.
 #' @export

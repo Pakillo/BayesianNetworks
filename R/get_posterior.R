@@ -1,7 +1,7 @@
 #' Get posterior values
 #'
-#' @param fit Fitted model (from `fit_model()`)
-#' @param data Data list (from `prepare_data()`)
+#' @param fit Fitted model (from [fit_model()])
+#' @param data Data list (from [prepare_data()])
 #' @param param character. Name of the parameter to retrieve the posterior samples.
 #'
 #' @return A data frame

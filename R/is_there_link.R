@@ -1,7 +1,7 @@
 #' Is there a link?
 #'
 #' @param df A dataframe containing posterior interaction probabilities, as
-#' generated from `get_posterior()`
+#' generated from [get_posterior()]
 #'
 #' @return A data frame with a new column `link` taking values of 0 (no link)
 #' and 1 (link).

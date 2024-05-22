@@ -10,10 +10,11 @@
 #'
 #' @examples
 #' data(web)
-#' plot_counts_obs_heat(web)
-#' plot_counts_obs_heat(web, sort = FALSE)
+#' plot_counts_obs(web)
+#' plot_counts_obs(web, sort = FALSE)
+#' plot_counts_obs(web, zero.na = FALSE, sort = FALSE)
 
-plot_counts_obs_heat <- function(mat = NULL, ...) {
+plot_counts_obs <- function(mat = NULL, ...) {
 
   mat |>
     network.tools::wide2long() |>

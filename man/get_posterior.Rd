@@ -12,9 +12,9 @@ get_posterior(
 )
 }
 \arguments{
-\item{fit}{Fitted model (from \code{fit_model()})}
+\item{fit}{Fitted model (from \code{\link[=fit_model]{fit_model()}})}
 
-\item{data}{Data list (from \code{prepare_data()})}
+\item{data}{Data list (from \code{\link[=prepare_data]{prepare_data()}})}
 
 \item{param}{character. Name of the parameter to retrieve the posterior samples.}
 }

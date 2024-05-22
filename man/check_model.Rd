@@ -7,7 +7,7 @@
 check_model(fit = NULL)
 }
 \arguments{
-\item{fit}{A fitted model, as obtained from \code{fit_model()}.}
+\item{fit}{A fitted model, as obtained from \code{\link[=fit_model]{fit_model()}}.}
 }
 \value{
 Model checks on console and graphical window.

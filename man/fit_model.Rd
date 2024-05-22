@@ -8,7 +8,7 @@ fit_model(data = NULL, model = "default", beta = 0.01, ...)
 }
 \arguments{
 \item{data}{A named list containing the required data, as obtained from
-\code{prepare_data()}.}
+\code{\link[=prepare_data]{prepare_data()}}.}
 
 \item{model}{character. Path to file describing the Stan model. Use in case
 you want to use a modified Stan model. Otherwise using "default" model provided
@@ -16,14 +16,14 @@ with the package.}
 
 \item{beta}{Rate of exponential prior on \code{r} (preference) parameter.
 Default beta is 0.01. Increase it if you have large count numbers.
-(Could use \code{plot_prior()} to examine the resultant prior.}
+(Could use \code{\link[=plot_prior]{plot_prior()}} to examine the resultant prior.}
 
-\item{...}{Further arguments for \code{cmdstanr::sample()}, like \code{iter_warmup},
+\item{...}{Further arguments for \code{\link[cmdstanr:model-method-sample]{cmdstanr::sample()}}, like \code{iter_warmup},
 \code{iter_sampling}, or \code{thin}, among others. It is recommended to increase the
 number of iterations (e.g. iter_sampling = 10000).}
 }
 \value{
-A fitted model (\code{cmdstanr::CmdStanMCMC()} object).
+A fitted model (\code{\link[cmdstanr:CmdStanMCMC]{cmdstanr::CmdStanMCMC()}} object).
 }
 \description{
 Fit model

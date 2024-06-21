@@ -26,8 +26,8 @@ predict_counts <- function(fit = NULL, data = NULL) {
 
   ## calculate predicted counts
   post <- dplyr::mutate(post,
-                 count = (1 - int.prob) * effort * plant.abund * animal.abund +
-                   int.prob * effort * plant.abund * animal.abund * (1 + preference))
+                        count = (1 - int.prob) * effort * plant.abund * animal.abund +
+                          int.prob * effort * plant.abund * animal.abund * (1 + preference))
 
   return(post)
 

@@ -2,12 +2,12 @@
 #'
 #' @param data A named list containing the required data, as obtained from
 #'  [prepare_data()].
-#' @param model character. Path to file describing the Stan model. Use in case
-#' you want to use a modified Stan model. Otherwise using "default" model provided
-#' with the package.
+#' @param model character. One of "Young2021", "sampling_effort", or
+#' "varying_preferences", or a path to a file describing the Stan model in case
+#' you want to use a modified Stan model.
 #' @param beta Rate of exponential prior on `r` (preference) parameter.
-#' Default beta is 0.01. Increase it if you have large count numbers.
-#' (Could use [plot_prior()] to examine the resultant prior.
+#' Default beta is 0.01. Increase it if you have large count numbers
+#' (can examine the resultant prior using [plot_prior()]).
 #' @param ... Further arguments for [cmdstanr::sample()], like `iter_warmup`,
 #' `iter_sampling`, or `thin`, among others. It is recommended to increase the
 #' number of iterations (e.g. iter_sampling = 10000).
@@ -21,10 +21,15 @@
 #' dt <- prepare_data(mat = web, sampl.eff = rep(20, nrow(web)))
 #' fit <- fit_model(dt)
 
-fit_model <- function(data = NULL, model = "default", beta = 0.01, ...) {
+fit_model <- function(data = NULL,
+                      model = c("sampling_effort", "Young2021", "varying_preferences"),
+                      beta = 0.01,
+                      ...) {
 
-  if (model == "default") {
-    mod.stan <- system.file("models/model_effort.stan", package = "BayesianNetworks")
+  model <- match.arg(model)  # TODO: remove this later to allow for user models
+
+  if (model %in% c("sampling_effort", "Young2021", "varying_preferences")) {
+    mod.stan <- system.file(paste0("models/", model, ".stan"), package = "BayesianNetworks")
   } else {
     mod.stan <- model
   }

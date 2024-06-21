@@ -38,11 +38,30 @@ get_posterior <- function(fit = NULL,
 
   param <- match.arg(param)
 
+  params_all <- function(fit) {
+    if (fit$metadata()$model_name == "varying_preferences_model") {
+      out <- tidybayes::spread_draws(fit, rho, r[Animal], sigma[Plant], tau[Animal], Q[Plant, Animal])
+    } else {
+      out <- tidybayes::spread_draws(fit, rho, r, sigma[Plant], tau[Animal], Q[Plant, Animal])
+    }
+    return(out)
+  }
+
+  params_preference <- function(fit) {
+    if (fit$metadata()$model_name == "varying_preferences_model") {
+      out <- tidybayes::spread_draws(fit, r[Animal])
+    } else {
+      s::spread_draws(fit, r)
+    }
+    return(out)
+  }
+
+
   post <- switch(
     param,
-    all = tidybayes::spread_draws(fit, rho, r, sigma[Plant], tau[Animal], Q[Plant, Animal]),
+    all = params_all(fit),
     connectance = tidybayes::spread_draws(fit, rho),
-    preference = tidybayes::spread_draws(fit, r),
+    preference = params_preference(fit),
     plant.abund = tidybayes::spread_draws(fit, sigma[Plant]),
     animal.abund = tidybayes::spread_draws(fit, tau[Animal]),
     int.prob = tidybayes::spread_draws(fit, Q[Plant, Animal]),

@@ -4,19 +4,24 @@
 \alias{fit_model}
 \title{Fit model}
 \usage{
-fit_model(data = NULL, model = "default", beta = 0.01, ...)
+fit_model(
+  data = NULL,
+  model = c("sampling_effort", "Young2021", "varying_preferences"),
+  beta = 0.01,
+  ...
+)
 }
 \arguments{
 \item{data}{A named list containing the required data, as obtained from
 \code{\link[=prepare_data]{prepare_data()}}.}
 
-\item{model}{character. Path to file describing the Stan model. Use in case
-you want to use a modified Stan model. Otherwise using "default" model provided
-with the package.}
+\item{model}{character. One of "Young2021", "sampling_effort", or
+"varying_preferences", or a path to a file describing the Stan model in case
+you want to use a modified Stan model.}
 
 \item{beta}{Rate of exponential prior on \code{r} (preference) parameter.
-Default beta is 0.01. Increase it if you have large count numbers.
-(Could use \code{\link[=plot_prior]{plot_prior()}} to examine the resultant prior.}
+Default beta is 0.01. Increase it if you have large count numbers
+(can examine the resultant prior using \code{\link[=plot_prior]{plot_prior()}}).}
 
 \item{...}{Further arguments for \code{\link[cmdstanr:model-method-sample]{cmdstanr::sample()}}, like \code{iter_warmup},
 \code{iter_sampling}, or \code{thin}, among others. It is recommended to increase the

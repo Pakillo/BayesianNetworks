@@ -4,10 +4,12 @@
 \alias{check_model}
 \title{Check fitted model}
 \usage{
-check_model(fit = NULL)
+check_model(fit = NULL, data = NULL)
 }
 \arguments{
 \item{fit}{A fitted model, as obtained from \code{\link[=fit_model]{fit_model()}}.}
+
+\item{data}{Data list (from \code{\link[=prepare_data]{prepare_data()}}).}
 }
 \value{
 Model checks on console and graphical window.
@@ -19,5 +21,5 @@ Check fitted model
 data(web)
 dt <- prepare_data(mat = web, sampl.eff = rep(20, nrow(web)))
 fit <- fit_model(dt, refresh = 0)
-check_model(fit)
+check_model(fit, data = data)
 }

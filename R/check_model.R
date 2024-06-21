@@ -1,6 +1,7 @@
 #' Check fitted model
 #'
 #' @param fit A fitted model, as obtained from [fit_model()].
+#' @param data Data list (from [prepare_data()]).
 #'
 #' @return Model checks on console and graphical window.
 #' @export
@@ -10,15 +11,15 @@
 #' data(web)
 #' dt <- prepare_data(mat = web, sampl.eff = rep(20, nrow(web)))
 #' fit <- fit_model(dt, refresh = 0)
-#' check_model(fit)
+#' check_model(fit, data = data)
 
-check_model <- function(fit = NULL) {
+check_model <- function(fit = NULL, data = NULL) {
 
   fit$diagnostic_summary()
 
   fit$cmdstan_diagnose()
 
-  print(plot_prior(fit = fit))
+  print(plot_prior(fit = fit, data = data))
 
   check_lp(fit)
 

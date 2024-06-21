@@ -51,7 +51,7 @@ get_posterior <- function(fit = NULL,
     if (fit$metadata()$model_name == "varying_preferences_model") {
       out <- tidybayes::spread_draws(fit, r[Animal])
     } else {
-      s::spread_draws(fit, r)
+      out <- tidybayes::spread_draws(fit, r)
     }
     return(out)
   }

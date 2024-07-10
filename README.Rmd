@@ -16,25 +16,116 @@ knitr::opts_chunk$set(
 # BayesianNetworks
 
 <!-- badges: start -->
+![](https://img.shields.io/github/r-package/v/Pakillo/BayesianNetworks)
+[![R-CMD-check](https://github.com/Pakillo/BayesianNetworks/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Pakillo/BayesianNetworks/actions/workflows/R-CMD-check.yaml)
+`r badger::badge_lifecycle("stable")`
+`r badger::badge_repostatus("Active")`
+[![HitCount](https://hits.dwyl.com/Pakillo/BayesianNetworks.svg?style=flat-square)](https://hits.dwyl.com/Pakillo/BayesianNetworks)
+[![HitCount](https://hits.dwyl.com/Pakillo/BayesianNetworks.svg?style=flat-square&show=unique)](https://hits.dwyl.com/Pakillo/BayesianNetworks)
 <!-- badges: end -->
 
-The goal of BayesianNetworks is to ...
+The BayesianNetworks R package facilitates modelling bipartite networks (like pollination, frugivory, or herbivory networks) using the Bayesian framework developed by [Young et al. (2021)](https://doi.org/10.1038/s41467-021-24149-x).
+
+Inferring the structure of bipartite networks from field (observational) data is a challenging task. Interaction data are hard to collect and require typically large sampling efforts, particularly to characterize infrequent interactions. Inferred network structure is highly sensitive to sampling design, effort, and completeness. Comparing networks from different studies without accounting for these sampling effects may lead to mistaken inferences. 
+
+This package uses Bayesian modelling to infer the posterior probability of each pairwise interaction in bipartite networks, accounting for sampling completeness and the inherent stochasticity of field observation data.
 
 ## Installation
 
 You can install the development version of BayesianNetworks from [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("Pakillo/BayesianNetworks")
+# install.packages("remotes")
+remotes::install_github("Pakillo/BayesianNetworks")
 ```
+
+The package requires a working installation of [Stan](https://mc-stan.org/). If you don't have `CmdStan` installed, after installing `BayesianNetworks` run:
+
+```r
+cmdstanr::install_cmdstan()
+```
+
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
-
 ```{r example}
 library(BayesianNetworks)
-## basic example code
+```
+
+Let's infer the structure of an example dataset from [Kaiser-Bunbury et al. 2017](https://doi.org/10.1038/nature21071) as in Young et al. 2021:
+
+```{r}
+data(web)
+```
+
+This is an adjacency matrix collecting the number of visits of 21 animals on 8 plants:
+
+```{r}
+web
+```
+
+```{r}
+plot_counts_obs(web, sort = FALSE)
+```
+
+First, prepare the data for modelling. Here we assume constant sampling effort among plants:
+
+```{r}
+dt <- prepare_data(mat = web, sampl.eff = rep(20, nrow(web)))
+```
+
+Now fit the model. There are several models available: the original model used in Young et al. (2021), a model that takes into account varying sampling effort among plants, and a model that allows for varying preferences among animals. The user can also provide a customised Stan model. See `fit_model()`.
+
+Here we run 4 parallel chains: 
+
+```{r}
+set.seed(3)
+options(mc.cores = 4)
+fit <- fit_model(dt, refresh = 0)
+```
+
+Check model:
+
+```{r}
+check_model(fit, data = dt)
+```
+
+Get the posteriors:
+
+```{r}
+post <- get_posterior(fit, data = dt)
+head(post)
+```
+
+```{r}
+plot_interaction_prob(post)
+```
+
+Predict interaction counts:
+
+```{r}
+pred.df <- predict_counts(fit, data = dt)
+plot_counts_pred(pred.df, sort = FALSE)
+```
+
+Compare observed and predicted counts:
+
+```{r}
+plot_counts_pred_obs(pred.df, data = dt)
+```
+
+Plot residuals:
+
+```{r}
+plot_residuals(pred.df, data = dt, sort = FALSE)
+```
+
+
+## Citation
+
+If you use `BayesianNetworks` please cite it:
+
+```{r comment=NA}
+citation("BayesianNetworks")
 ```
 

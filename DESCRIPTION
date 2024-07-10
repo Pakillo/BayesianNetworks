@@ -22,6 +22,7 @@ Imports:
     network.tools,
     tidybayes
 Remotes:
+    stan-dev/cmdstanr,
     Pakillo/network.tools
 Depends: 
     R (>= 4.1)

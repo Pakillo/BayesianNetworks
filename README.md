@@ -102,26 +102,26 @@ customised Stan model. See `fit_model()`.
 Here we run 4 parallel chains:
 
 ``` r
-set.seed(3)
+set.seed(1)
 options(mc.cores = 4)
 fit <- fit_model(dt, refresh = 0)
 #> Running MCMC with 4 parallel chains...
 #> 
-#> Chain 3 finished in 1.5 seconds.
-#> Chain 1 finished in 1.7 seconds.
-#> Chain 2 finished in 1.6 seconds.
-#> Chain 4 finished in 1.6 seconds.
+#> Chain 1 finished in 1.9 seconds.
+#> Chain 4 finished in 1.8 seconds.
+#> Chain 2 finished in 2.4 seconds.
+#> Chain 3 finished in 2.4 seconds.
 #> 
 #> All 4 chains finished successfully.
-#> Mean chain execution time: 1.6 seconds.
-#> Total execution time: 1.9 seconds.
+#> Mean chain execution time: 2.1 seconds.
+#> Total execution time: 2.6 seconds.
 ```
 
 Check model:
 
 ``` r
 check_model(fit, data = dt)
-#> Processing csv files: /tmp/RtmpSjOIL2/sampling_effort-202407101233-1-5af767.csv, /tmp/RtmpSjOIL2/sampling_effort-202407101233-2-5af767.csv, /tmp/RtmpSjOIL2/sampling_effort-202407101233-3-5af767.csv, /tmp/RtmpSjOIL2/sampling_effort-202407101233-4-5af767.csv
+#> Processing csv files: /tmp/Rtmp7a2lHW/sampling_effort-202407101353-1-42d5f3.csv, /tmp/Rtmp7a2lHW/sampling_effort-202407101353-2-42d5f3.csv, /tmp/Rtmp7a2lHW/sampling_effort-202407101353-3-42d5f3.csv, /tmp/Rtmp7a2lHW/sampling_effort-202407101353-4-42d5f3.csv
 #> 
 #> Checking sampler transitions treedepth.
 #> Treedepth satisfactory for all transitions.
@@ -150,12 +150,12 @@ head(post)
 #> # Groups:   Plant, Animal [6]
 #>   Plant Animal .chain .iteration .draw connectance preference plant.abund
 #>   <chr> <chr>   <int>      <int> <int>       <dbl>      <dbl>       <dbl>
-#> 1 P1    A1          1          1     1       0.228       27.3      0.0336
-#> 2 P1    A2          1          1     1       0.228       27.3      0.0336
-#> 3 P1    A3          1          1     1       0.228       27.3      0.0336
-#> 4 P1    A4          1          1     1       0.228       27.3      0.0336
-#> 5 P1    A5          1          1     1       0.228       27.3      0.0336
-#> 6 P1    A6          1          1     1       0.228       27.3      0.0336
+#> 1 P1    A1          1          1     1       0.299       33.0      0.0185
+#> 2 P1    A2          1          1     1       0.299       33.0      0.0185
+#> 3 P1    A3          1          1     1       0.299       33.0      0.0185
+#> 4 P1    A4          1          1     1       0.299       33.0      0.0185
+#> 5 P1    A5          1          1     1       0.299       33.0      0.0185
+#> 6 P1    A6          1          1     1       0.299       33.0      0.0185
 #> # ℹ 3 more variables: animal.abund <dbl>, int.prob <dbl>, link <int>
 ```
 
@@ -196,20 +196,19 @@ If you use `BayesianNetworks` please cite it:
 
 ``` r
 citation("BayesianNetworks")
-To cite package 'BayesianNetworks' in publications use:
+If you use BayesianNetworks, please cite both Young et al. (2021) and
+the package as:
+
+  Young J, Valdovinos F, Newman M (2021). "Reconstruction of
+  plant–pollinator networks from observational data." _Nature
+  Communications_, *12*, 3911. doi:10.1038/s41467-021-24149-x
+  <https://doi.org/10.1038/s41467-021-24149-x>.
 
   Rodriguez-Sanchez F, Young J (2024). _BayesianNetworks: Bayesian
-  Modelling of Bipartite Networks_. R package version 0.0.7, commit
-  6965aa0904ca23ef532873c2adf797ed76a8a832,
-  <https://github.com/Pakillo/BayesianNetworks>.
+  Modelling of Bipartite Networks_.
+  <https://pakillo.github.io/BayesianNetworks/>.
 
-A BibTeX entry for LaTeX users is
-
-  @Manual{,
-    title = {BayesianNetworks: Bayesian Modelling of Bipartite Networks},
-    author = {Francisco Rodriguez-Sanchez and Jean-Gabriel Young},
-    year = {2024},
-    note = {R package version 0.0.7, commit 6965aa0904ca23ef532873c2adf797ed76a8a832},
-    url = {https://github.com/Pakillo/BayesianNetworks},
-  }
+To see these entries in BibTeX format, use 'print(<citation>,
+bibtex=TRUE)', 'toBibtex(.)', or set
+'options(citation.bibtex.max=999)'.
 ```

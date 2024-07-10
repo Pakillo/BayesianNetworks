@@ -79,7 +79,7 @@ Now fit the model. There are several models available: the original model used i
 Here we run 4 parallel chains: 
 
 ```{r}
-set.seed(3)
+set.seed(1)
 options(mc.cores = 4)
 fit <- fit_model(dt, refresh = 0)
 ```

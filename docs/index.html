@@ -110,23 +110,23 @@
 <p>Now fit the model. There are several models available: the original model used in Young et al. (2021), a model that takes into account varying sampling effort among plants, and a model that allows for varying preferences among animals. The user can also provide a customised Stan model. See <code><a href="reference/fit_model.html">fit_model()</a></code>.</p>
 <p>Here we run 4 parallel chains:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>mc.cores <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
 <span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fit_model.html">fit_model</a></span><span class="op">(</span><span class="va">dt</span>, refresh <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Running MCMC with 4 parallel chains...</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Chain 3 finished in 1.5 seconds.</span></span>
-<span><span class="co">#&gt; Chain 1 finished in 1.7 seconds.</span></span>
-<span><span class="co">#&gt; Chain 2 finished in 1.6 seconds.</span></span>
-<span><span class="co">#&gt; Chain 4 finished in 1.6 seconds.</span></span>
+<span><span class="co">#&gt; Chain 1 finished in 1.9 seconds.</span></span>
+<span><span class="co">#&gt; Chain 4 finished in 1.8 seconds.</span></span>
+<span><span class="co">#&gt; Chain 2 finished in 2.4 seconds.</span></span>
+<span><span class="co">#&gt; Chain 3 finished in 2.4 seconds.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; All 4 chains finished successfully.</span></span>
-<span><span class="co">#&gt; Mean chain execution time: 1.6 seconds.</span></span>
-<span><span class="co">#&gt; Total execution time: 1.9 seconds.</span></span></code></pre></div>
+<span><span class="co">#&gt; Mean chain execution time: 2.1 seconds.</span></span>
+<span><span class="co">#&gt; Total execution time: 2.6 seconds.</span></span></code></pre></div>
 <p>Check model:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/check_model.html">check_model</a></span><span class="op">(</span><span class="va">fit</span>, data <span class="op">=</span> <span class="va">dt</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Processing csv files: /tmp/RtmpSjOIL2/sampling_effort-202407101233-1-5af767.csv, /tmp/RtmpSjOIL2/sampling_effort-202407101233-2-5af767.csv, /tmp/RtmpSjOIL2/sampling_effort-202407101233-3-5af767.csv, /tmp/RtmpSjOIL2/sampling_effort-202407101233-4-5af767.csv</span></span>
+<span><span class="co">#&gt; Processing csv files: /tmp/Rtmp7a2lHW/sampling_effort-202407101353-1-42d5f3.csv, /tmp/Rtmp7a2lHW/sampling_effort-202407101353-2-42d5f3.csv, /tmp/Rtmp7a2lHW/sampling_effort-202407101353-3-42d5f3.csv, /tmp/Rtmp7a2lHW/sampling_effort-202407101353-4-42d5f3.csv</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Checking sampler transitions treedepth.</span></span>
 <span><span class="co">#&gt; Treedepth satisfactory for all transitions.</span></span>
@@ -151,12 +151,12 @@
 <span><span class="co">#&gt; # Groups:   Plant, Animal [6]</span></span>
 <span><span class="co">#&gt;   Plant Animal .chain .iteration .draw connectance preference plant.abund</span></span>
 <span><span class="co">#&gt;   &lt;chr&gt; &lt;chr&gt;   &lt;int&gt;      &lt;int&gt; &lt;int&gt;       &lt;dbl&gt;      &lt;dbl&gt;       &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 P1    A1          1          1     1       0.228       27.3      0.0336</span></span>
-<span><span class="co">#&gt; 2 P1    A2          1          1     1       0.228       27.3      0.0336</span></span>
-<span><span class="co">#&gt; 3 P1    A3          1          1     1       0.228       27.3      0.0336</span></span>
-<span><span class="co">#&gt; 4 P1    A4          1          1     1       0.228       27.3      0.0336</span></span>
-<span><span class="co">#&gt; 5 P1    A5          1          1     1       0.228       27.3      0.0336</span></span>
-<span><span class="co">#&gt; 6 P1    A6          1          1     1       0.228       27.3      0.0336</span></span>
+<span><span class="co">#&gt; 1 P1    A1          1          1     1       0.299       33.0      0.0185</span></span>
+<span><span class="co">#&gt; 2 P1    A2          1          1     1       0.299       33.0      0.0185</span></span>
+<span><span class="co">#&gt; 3 P1    A3          1          1     1       0.299       33.0      0.0185</span></span>
+<span><span class="co">#&gt; 4 P1    A4          1          1     1       0.299       33.0      0.0185</span></span>
+<span><span class="co">#&gt; 5 P1    A5          1          1     1       0.299       33.0      0.0185</span></span>
+<span><span class="co">#&gt; 6 P1    A6          1          1     1       0.299       33.0      0.0185</span></span>
 <span><span class="co">#&gt; # ℹ 3 more variables: animal.abund &lt;dbl&gt;, int.prob &lt;dbl&gt;, link &lt;int&gt;</span></span></code></pre></div>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/plot_interaction_prob.html">plot_interaction_prob</a></span><span class="op">(</span><span class="va">post</span><span class="op">)</span></span></code></pre></div>
@@ -180,22 +180,21 @@
 </h2>
 <p>If you use <code>BayesianNetworks</code> please cite it:</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="fu">citation</span>(<span class="st">"BayesianNetworks"</span>)</span>
-<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>To cite package <span class="st">'BayesianNetworks'</span> <span class="cf">in</span> publications use<span class="sc">:</span></span>
-<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a></span>
-<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a>  Rodriguez<span class="sc">-</span>Sanchez F, Young <span class="fu">J</span> (<span class="dv">2024</span>). _BayesianNetworks<span class="sc">:</span> Bayesian</span>
-<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a>  Modelling of Bipartite Networks_. R package version <span class="dv">0</span>.<span class="fl">0.7</span>, commit</span>
-<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a>  <span class="dv">6965</span>aa0904ca23ef532873c2adf797ed76a8a832,</span>
-<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a>  <span class="sc">&lt;</span>https<span class="sc">:</span><span class="er">//</span>github.com<span class="sc">/</span>Pakillo<span class="sc">/</span>BayesianNetworks<span class="sc">&gt;</span>.</span>
-<span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a></span>
-<span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a>A BibTeX entry <span class="cf">for</span> LaTeX users is</span>
-<span id="cb15-10"><a href="#cb15-10" tabindex="-1"></a></span>
-<span id="cb15-11"><a href="#cb15-11" tabindex="-1"></a>  <span class="sc">@</span>Manual{,</span>
-<span id="cb15-12"><a href="#cb15-12" tabindex="-1"></a>    title <span class="ot">=</span> {BayesianNetworks<span class="sc">:</span> Bayesian Modelling of Bipartite Networks},</span>
-<span id="cb15-13"><a href="#cb15-13" tabindex="-1"></a>    author <span class="ot">=</span> {Francisco Rodriguez<span class="sc">-</span>Sanchez and Jean<span class="sc">-</span>Gabriel Young},</span>
-<span id="cb15-14"><a href="#cb15-14" tabindex="-1"></a>    year <span class="ot">=</span> {<span class="dv">2024</span>},</span>
-<span id="cb15-15"><a href="#cb15-15" tabindex="-1"></a>    note <span class="ot">=</span> {R package version <span class="dv">0</span>.<span class="fl">0.7</span>, commit <span class="dv">6965</span>aa0904ca23ef532873c2adf797ed76a8a832},</span>
-<span id="cb15-16"><a href="#cb15-16" tabindex="-1"></a>    url <span class="ot">=</span> {https<span class="sc">:</span><span class="er">//</span>github.com<span class="sc">/</span>Pakillo<span class="sc">/</span>BayesianNetworks},</span>
-<span id="cb15-17"><a href="#cb15-17" tabindex="-1"></a>  }</span></code></pre></div>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>If you use BayesianNetworks, please cite both Young et <span class="fu">al.</span> (<span class="dv">2021</span>) and</span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a>the package as<span class="sc">:</span></span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a>  Young J, Valdovinos F, Newman <span class="fu">M</span> (<span class="dv">2021</span>). <span class="st">"Reconstruction of</span></span>
+<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a><span class="st">  plant–pollinator networks from observational data."</span> _Nature</span>
+<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a>  Communications_, <span class="sc">*</span><span class="dv">12</span><span class="sc">*</span>, <span class="fl">3911.</span> doi<span class="sc">:</span><span class="fl">10.1038</span><span class="sc">/</span>s41467<span class="dv">-021-24149</span><span class="sc">-</span>x</span>
+<span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a>  <span class="sc">&lt;</span>https<span class="sc">:</span><span class="er">//</span>doi.org<span class="sc">/</span><span class="fl">10.1038</span><span class="sc">/</span>s41467<span class="dv">-021-24149</span><span class="sc">-</span>x<span class="sc">&gt;</span>.</span>
+<span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a></span>
+<span id="cb15-10"><a href="#cb15-10" tabindex="-1"></a>  Rodriguez<span class="sc">-</span>Sanchez F, Young <span class="fu">J</span> (<span class="dv">2024</span>). _BayesianNetworks<span class="sc">:</span> Bayesian</span>
+<span id="cb15-11"><a href="#cb15-11" tabindex="-1"></a>  Modelling of Bipartite Networks_.</span>
+<span id="cb15-12"><a href="#cb15-12" tabindex="-1"></a>  <span class="sc">&lt;</span>https<span class="sc">:</span><span class="er">//</span>pakillo.github.io<span class="sc">/</span>BayesianNetworks<span class="sc">/</span><span class="er">&gt;</span>.</span>
+<span id="cb15-13"><a href="#cb15-13" tabindex="-1"></a></span>
+<span id="cb15-14"><a href="#cb15-14" tabindex="-1"></a>To see these entries <span class="cf">in</span> BibTeX format, use <span class="st">'print(&lt;citation&gt;,</span></span>
+<span id="cb15-15"><a href="#cb15-15" tabindex="-1"></a><span class="st">bibtex=TRUE)'</span>, <span class="st">'toBibtex(.)'</span>, or set</span>
+<span id="cb15-16"><a href="#cb15-16" tabindex="-1"></a><span class="st">'options(citation.bibtex.max=999)'</span>.</span></code></pre></div>
 </div>
 </div>
   </div>

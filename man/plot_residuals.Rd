@@ -21,10 +21,12 @@ A ggplot object
 Plot heatmap of residuals (observed - predicted counts).
 }
 \examples{
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 data(web)
 dt <- prepare_data(mat = web, sampl.eff = rep(20, nrow(web)))
 fit <- fit_model(dt, refresh = 0)
 pred.df <- predict_counts(fit, dt)
 plot_residuals(pred.df, dt)
 plot_residuals(pred.df, dt, sort = FALSE)
+\dontshow{\}) # examplesIf}
 }

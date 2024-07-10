@@ -7,7 +7,7 @@
 #' @return A data frame
 #' @export
 #'
-#' @examples
+#' @examplesIf interactive()
 #' data(web)
 #' dt <- prepare_data(mat = web, sampl.eff = rep(20, nrow(web)))
 #' fit <- fit_model(dt, refresh = 0)
@@ -76,7 +76,7 @@ get_posterior <- function(fit = NULL,
     animal.abund = "tau",
     int.prob = "Q")
 
-  post <- dplyr::rename(post, any_of(param.names))
+  post <- dplyr::rename(post, dplyr::any_of(param.names))
 
   ## generate posteriors of link existence
   if (param == "all" | param == "link") {

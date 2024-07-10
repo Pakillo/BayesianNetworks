@@ -13,7 +13,7 @@
 #' @return A plot
 #' @export
 #'
-#' @examples
+#' @examplesIf interactive()
 #' ## Providing value for beta
 #' plot_prior(beta = 0.01)
 #' plot_prior(beta = 0.001)

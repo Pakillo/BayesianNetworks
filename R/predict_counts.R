@@ -9,7 +9,7 @@
 #' @return A data frame
 #' @export
 #'
-#' @examples
+#' @examplesIf interactive()
 #' data(web)
 #' dt <- prepare_data(mat = web, sampl.eff = rep(20, nrow(web)))
 #' fit <- fit_model(dt, refresh = 0)

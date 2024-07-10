@@ -34,7 +34,9 @@ A fitted model (\code{\link[cmdstanr:CmdStanMCMC]{cmdstanr::CmdStanMCMC()}} obje
 Fit model
 }
 \examples{
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 data(web)
 dt <- prepare_data(mat = web, sampl.eff = rep(20, nrow(web)))
 fit <- fit_model(dt)
+\dontshow{\}) # examplesIf}
 }

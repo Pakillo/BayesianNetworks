@@ -17,9 +17,11 @@ A ggplot object
 Plot a heatmap of average interaction probabilities
 }
 \examples{
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 data(web)
 dt <- prepare_data(mat = web, sampl.eff = rep(20, nrow(web)))
 fit <- fit_model(dt, refresh = 0)
 post <- get_posterior(fit, dt)
 plot_interaction_prob(post)
+\dontshow{\}) # examplesIf}
 }

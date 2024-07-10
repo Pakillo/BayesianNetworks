@@ -24,6 +24,7 @@ Alternatively, if providing the fitted model, a plot comparing the
 prior versus posterior preference(s) will be produced.
 }
 \examples{
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 ## Providing value for beta
 plot_prior(beta = 0.01)
 plot_prior(beta = 0.001)
@@ -33,4 +34,5 @@ data(web)
 dt <- prepare_data(mat = web, sampl.eff = rep(20, nrow(web)))
 fit <- fit_model(dt, refresh = 0)
 plot_prior(fit = fit, data = dt)
+\dontshow{\}) # examplesIf}
 }

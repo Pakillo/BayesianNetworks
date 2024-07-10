@@ -16,7 +16,7 @@
 #' @export
 #' @import cmdstanr
 #'
-#' @examples
+#' @examplesIf interactive()
 #' data(web)
 #' dt <- prepare_data(mat = web, sampl.eff = rep(20, nrow(web)))
 #' fit <- fit_model(dt)
@@ -25,6 +25,10 @@ fit_model <- function(data = NULL,
                       model = c("sampling_effort", "Young2021", "varying_preferences"),
                       beta = 0.01,
                       ...) {
+
+  if (is.null(data)) {
+    stop("Please provide the data as produced by 'prepare_data()'")
+  }
 
   model <- match.arg(model)  # TODO: remove this later to allow for user models
 

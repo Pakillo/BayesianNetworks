@@ -33,6 +33,7 @@ A ggplot object
 Plot predicted versus observed counts
 }
 \examples{
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 data(web)
 dt <- prepare_data(mat = web, sampl.eff = rep(20, nrow(web)))
 fit <- fit_model(dt, refresh = 0)
@@ -41,4 +42,5 @@ plot_counts_pred_obs(pred.df, dt)
 plot_counts_pred_obs(pred.df, dt, fatten_point = 3)
 plot_counts_pred_obs(pred.df, dt, byplant = TRUE)
 plot_counts_pred_obs(pred.df, dt, byplant = TRUE, scale = "free")
+\dontshow{\}) # examplesIf}
 }

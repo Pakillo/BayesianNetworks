@@ -31,7 +31,10 @@
     <loc>/reference/index.html</loc>
   </url>
   <url>
-    <loc>/reference/plot_counts_pred_heat.html</loc>
+    <loc>/reference/plot_counts_obs.html</loc>
+  </url>
+  <url>
+    <loc>/reference/plot_counts_pred.html</loc>
   </url>
   <url>
     <loc>/reference/plot_counts_pred_obs.html</loc>
@@ -43,9 +46,15 @@
     <loc>/reference/plot_prior.html</loc>
   </url>
   <url>
+    <loc>/reference/plot_residuals.html</loc>
+  </url>
+  <url>
     <loc>/reference/predict_counts.html</loc>
   </url>
   <url>
     <loc>/reference/prepare_data.html</loc>
+  </url>
+  <url>
+    <loc>/reference/web.html</loc>
   </url>
 </urlset>

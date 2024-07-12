@@ -107,21 +107,21 @@ options(mc.cores = 4)
 fit <- fit_model(dt, refresh = 0)
 #> Running MCMC with 4 parallel chains...
 #> 
-#> Chain 1 finished in 1.9 seconds.
-#> Chain 4 finished in 1.8 seconds.
-#> Chain 2 finished in 2.4 seconds.
-#> Chain 3 finished in 2.4 seconds.
+#> Chain 1 finished in 1.6 seconds.
+#> Chain 4 finished in 1.6 seconds.
+#> Chain 2 finished in 1.7 seconds.
+#> Chain 3 finished in 1.8 seconds.
 #> 
 #> All 4 chains finished successfully.
-#> Mean chain execution time: 2.1 seconds.
-#> Total execution time: 2.6 seconds.
+#> Mean chain execution time: 1.7 seconds.
+#> Total execution time: 2.0 seconds.
 ```
 
 Check model:
 
 ``` r
 check_model(fit, data = dt)
-#> Processing csv files: /tmp/Rtmp7a2lHW/sampling_effort-202407101353-1-42d5f3.csv, /tmp/Rtmp7a2lHW/sampling_effort-202407101353-2-42d5f3.csv, /tmp/Rtmp7a2lHW/sampling_effort-202407101353-3-42d5f3.csv, /tmp/Rtmp7a2lHW/sampling_effort-202407101353-4-42d5f3.csv
+#> Processing csv files: /tmp/RtmpDulZ4B/sampling_effort-202407121700-1-443aa4.csv, /tmp/RtmpDulZ4B/sampling_effort-202407121700-2-443aa4.csv, /tmp/RtmpDulZ4B/sampling_effort-202407121700-3-443aa4.csv, /tmp/RtmpDulZ4B/sampling_effort-202407121700-4-443aa4.csv
 #> 
 #> Checking sampler transitions treedepth.
 #> Treedepth satisfactory for all transitions.
@@ -204,9 +204,8 @@ the package as:
   Communications_, *12*, 3911. doi:10.1038/s41467-021-24149-x
   <https://doi.org/10.1038/s41467-021-24149-x>.
 
-  Rodriguez-Sanchez F, Young J (2024). _BayesianNetworks: Bayesian
-  Modelling of Bipartite Networks_.
-  <https://pakillo.github.io/BayesianNetworks/>.
+  Rodriguez-Sanchez F (2024). _BayesianNetworks: Bayesian Modelling of
+  Bipartite Networks_. <https://pakillo.github.io/BayesianNetworks/>.
 
 To see these entries in BibTeX format, use 'print(<citation>,
 bibtex=TRUE)', 'toBibtex(.)', or set

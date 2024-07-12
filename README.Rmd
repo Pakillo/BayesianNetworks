@@ -129,3 +129,4 @@ If you use `BayesianNetworks` please cite it:
 citation("BayesianNetworks")
 ```
 
+

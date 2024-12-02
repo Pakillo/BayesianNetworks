@@ -1,4 +1,4 @@
-citHeader("If you use BayesianNetworks, please cite both Young et al. (2021) and the package as:")
+citHeader("If you use NetBayes, please cite both Young et al. (2021) and the package as:")
 
 bibentry(
   bibtype  = "Article",
@@ -18,10 +18,10 @@ bibentry(
 
 bibentry(
   bibtype  = "Manual",
-  title    = "BayesianNetworks: Bayesian Modelling of Bipartite Networks",
+  title    = "NetBayes: Bayesian Modelling of Bipartite Networks",
   author   = c(
               person("Francisco", "Rodriguez-Sanchez")
               ),
   year     = 2024,
-  url      = "https://pakillo.github.io/BayesianNetworks/"
+  url      = "https://pakillo.github.io/NetBayes/"
 )

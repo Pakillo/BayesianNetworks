@@ -1,60 +1,23 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>/404.html</loc>
-  </url>
-  <url>
-    <loc>/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>/authors.html</loc>
-  </url>
-  <url>
-    <loc>/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/BayesianNetworks-package.html</loc>
-  </url>
-  <url>
-    <loc>/reference/check_model.html</loc>
-  </url>
-  <url>
-    <loc>/reference/fit_model.html</loc>
-  </url>
-  <url>
-    <loc>/reference/get_posterior.html</loc>
-  </url>
-  <url>
-    <loc>/reference/get_seed.html</loc>
-  </url>
-  <url>
-    <loc>/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/plot_counts_obs.html</loc>
-  </url>
-  <url>
-    <loc>/reference/plot_counts_pred.html</loc>
-  </url>
-  <url>
-    <loc>/reference/plot_counts_pred_obs.html</loc>
-  </url>
-  <url>
-    <loc>/reference/plot_interaction_prob.html</loc>
-  </url>
-  <url>
-    <loc>/reference/plot_prior.html</loc>
-  </url>
-  <url>
-    <loc>/reference/plot_residuals.html</loc>
-  </url>
-  <url>
-    <loc>/reference/predict_counts.html</loc>
-  </url>
-  <url>
-    <loc>/reference/prepare_data.html</loc>
-  </url>
-  <url>
-    <loc>/reference/web.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://pakillo.github.io/NetBayes/404.html</loc></url>
+<url><loc>https://pakillo.github.io/NetBayes/LICENSE.html</loc></url>
+<url><loc>https://pakillo.github.io/NetBayes/authors.html</loc></url>
+<url><loc>https://pakillo.github.io/NetBayes/index.html</loc></url>
+<url><loc>https://pakillo.github.io/NetBayes/reference/BayesianNetworks-package.html</loc></url>
+<url><loc>https://pakillo.github.io/NetBayes/reference/NetBayes-package.html</loc></url>
+<url><loc>https://pakillo.github.io/NetBayes/reference/check_model.html</loc></url>
+<url><loc>https://pakillo.github.io/NetBayes/reference/fit_model.html</loc></url>
+<url><loc>https://pakillo.github.io/NetBayes/reference/get_posterior.html</loc></url>
+<url><loc>https://pakillo.github.io/NetBayes/reference/get_seed.html</loc></url>
+<url><loc>https://pakillo.github.io/NetBayes/reference/index.html</loc></url>
+<url><loc>https://pakillo.github.io/NetBayes/reference/plot_counts_obs.html</loc></url>
+<url><loc>https://pakillo.github.io/NetBayes/reference/plot_counts_pred.html</loc></url>
+<url><loc>https://pakillo.github.io/NetBayes/reference/plot_counts_pred_obs.html</loc></url>
+<url><loc>https://pakillo.github.io/NetBayes/reference/plot_interaction_prob.html</loc></url>
+<url><loc>https://pakillo.github.io/NetBayes/reference/plot_prior.html</loc></url>
+<url><loc>https://pakillo.github.io/NetBayes/reference/plot_residuals.html</loc></url>
+<url><loc>https://pakillo.github.io/NetBayes/reference/predict_counts.html</loc></url>
+<url><loc>https://pakillo.github.io/NetBayes/reference/prepare_data.html</loc></url>
+<url><loc>https://pakillo.github.io/NetBayes/reference/web.html</loc></url>
 </urlset>
+

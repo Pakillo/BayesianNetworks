@@ -11,7 +11,7 @@ Bayesian modelling of bipartite network structure, following the approach of You
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/Pakillo/NetBayes}
+  \item \url{https://pakillo.github.io/NetBayes/}
   \item Report bugs at \url{https://github.com/Pakillo/NetBayes/issues}
 }
 

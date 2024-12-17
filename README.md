@@ -1,22 +1,22 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# NetBayes
+# BayesianWebs
 
 <!-- badges: start -->
 
-![](https://img.shields.io/github/r-package/v/Pakillo/NetBayes)
-[![R-CMD-check](https://github.com/Pakillo/NetBayes/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Pakillo/NetBayes/actions/workflows/R-CMD-check.yaml)
+![](https://img.shields.io/github/r-package/v/Pakillo/BayesianWebs)
+[![R-CMD-check](https://github.com/Pakillo/BayesianWebs/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Pakillo/BayesianWebs/actions/workflows/R-CMD-check.yaml)
 [![](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![Project Status: Active - The project has reached a stable, usable
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
-[![HitCount](https://hits.dwyl.com/Pakillo/NetBayes.svg?style=flat-square)](https://hits.dwyl.com/Pakillo/NetBayes)
-[![HitCount](https://hits.dwyl.com/Pakillo/NetBayes.svg?style=flat-square&show=unique)](https://hits.dwyl.com/Pakillo/NetBayes)
+[![HitCount](https://hits.dwyl.com/Pakillo/BayesianWebs.svg?style=flat-square)](https://hits.dwyl.com/Pakillo/BayesianWebs)
+[![HitCount](https://hits.dwyl.com/Pakillo/BayesianWebs.svg?style=flat-square&show=unique)](https://hits.dwyl.com/Pakillo/BayesianWebs)
 <!-- badges: end -->
 
-The NetBayes R package facilitates modelling bipartite networks (like
-pollination, frugivory, or herbivory networks) using the Bayesian
+The BayesianWebs R package facilitates modelling bipartite networks
+(like pollination, frugivory, or herbivory networks) using the Bayesian
 framework developed by [Young et
 al. (2021)](https://doi.org/10.1038/s41467-021-24149-x).
 
@@ -35,17 +35,17 @@ observation data.
 
 ## Installation
 
-You can install the development version of NetBayes from
+You can install the development version of BayesianWebs from
 [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("remotes")
-remotes::install_github("Pakillo/NetBayes")
+remotes::install_github("Pakillo/BayesianWebs")
 ```
 
 The package requires a working installation of
 [Stan](https://mc-stan.org/). If you don’t have `CmdStan` installed,
-after installing `NetBayes` run:
+after installing `BayesianWebs` run:
 
 ``` r
 cmdstanr::install_cmdstan()
@@ -54,7 +54,7 @@ cmdstanr::install_cmdstan()
 ## Example
 
 ``` r
-library(NetBayes)
+library(BayesianWebs)
 ```
 
 Let’s infer the structure of an example dataset from [Kaiser-Bunbury et
@@ -107,21 +107,21 @@ options(mc.cores = 4)
 fit <- fit_model(dt, refresh = 0)
 #> Running MCMC with 4 parallel chains...
 #> 
-#> Chain 1 finished in 1.6 seconds.
-#> Chain 4 finished in 1.7 seconds.
-#> Chain 2 finished in 1.7 seconds.
-#> Chain 3 finished in 1.8 seconds.
+#> Chain 1 finished in 2.9 seconds.
+#> Chain 4 finished in 2.9 seconds.
+#> Chain 2 finished in 3.0 seconds.
+#> Chain 3 finished in 3.1 seconds.
 #> 
 #> All 4 chains finished successfully.
-#> Mean chain execution time: 1.7 seconds.
-#> Total execution time: 2.1 seconds.
+#> Mean chain execution time: 2.9 seconds.
+#> Total execution time: 3.4 seconds.
 ```
 
 Check model:
 
 ``` r
 check_model(fit, data = dt)
-#> Processing csv files: /tmp/Rtmp6j1koe/sampling_effort-202412022135-1-43a085.csv, /tmp/Rtmp6j1koe/sampling_effort-202412022135-2-43a085.csv, /tmp/Rtmp6j1koe/sampling_effort-202412022135-3-43a085.csv, /tmp/Rtmp6j1koe/sampling_effort-202412022135-4-43a085.csv
+#> Processing csv files: /tmp/Rtmpq9vAYS/sampling_effort-202412172000-1-400f5e.csv, /tmp/Rtmpq9vAYS/sampling_effort-202412172000-2-400f5e.csv, /tmp/Rtmpq9vAYS/sampling_effort-202412172000-3-400f5e.csv, /tmp/Rtmpq9vAYS/sampling_effort-202412172000-4-400f5e.csv
 #> 
 #> Checking sampler transitions treedepth.
 #> Treedepth satisfactory for all transitions.
@@ -192,11 +192,11 @@ plot_residuals(pred.df, data = dt, sort = FALSE)
 
 ## Citation
 
-If you use `NetBayes` please cite it:
+If you use `BayesianWebs` please cite it:
 
 ``` r
-citation("NetBayes")
-If you use NetBayes, please cite both Young et al. (2021) and the
+citation("BayesianWebs")
+If you use BayesianWebs, please cite both Young et al. (2021) and the
 package as:
 
   Young J, Valdovinos F, Newman M (2021). "Reconstruction of
@@ -204,8 +204,8 @@ package as:
   Communications_, *12*, 3911. doi:10.1038/s41467-021-24149-x
   <https://doi.org/10.1038/s41467-021-24149-x>.
 
-  Rodriguez-Sanchez F (2024). _NetBayes: Bayesian Modelling of
-  Bipartite Networks_. <https://pakillo.github.io/NetBayes/>.
+  Rodriguez-Sanchez F (2024). _BayesianWebs: Bayesian Modelling of
+  Bipartite Networks_. <https://pakillo.github.io/BayesianWebs/>.
 
 To see these entries in BibTeX format, use 'print(<citation>,
 bibtex=TRUE)', 'toBibtex(.)', or set

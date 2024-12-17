@@ -33,7 +33,7 @@ fit_model <- function(data = NULL,
   model <- match.arg(model)  # TODO: remove this later to allow for user models
 
   if (model %in% c("sampling_effort", "Young2021", "varying_preferences")) {
-    mod.stan <- system.file(paste0("models/", model, ".stan"), package = "NetBayes")
+    mod.stan <- system.file(paste0("models/", model, ".stan"), package = "BayesianWebs")
   } else {
     mod.stan <- model
   }

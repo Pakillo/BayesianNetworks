@@ -1,4 +1,4 @@
-Package: NetBayes
+Package: BayesianWebs
 Title: Bayesian Modelling of Bipartite Networks
 Version: 0.0.7
 Authors@R: 
@@ -12,8 +12,8 @@ License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
-URL: https://pakillo.github.io/NetBayes/
-BugReports: https://github.com/Pakillo/NetBayes/issues
+URL: https://pakillo.github.io/BayesianWebs/
+BugReports: https://github.com/Pakillo/BayesianWebs/issues
 Imports:
     cmdstanr,
     dplyr,

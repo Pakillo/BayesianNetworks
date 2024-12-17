@@ -13,18 +13,18 @@ knitr::opts_chunk$set(
 )
 ```
 
-# NetBayes
+# BayesianWebs
 
 <!-- badges: start -->
-![](https://img.shields.io/github/r-package/v/Pakillo/NetBayes)
-[![R-CMD-check](https://github.com/Pakillo/NetBayes/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Pakillo/NetBayes/actions/workflows/R-CMD-check.yaml)
+![](https://img.shields.io/github/r-package/v/Pakillo/BayesianWebs)
+[![R-CMD-check](https://github.com/Pakillo/BayesianWebs/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Pakillo/BayesianWebs/actions/workflows/R-CMD-check.yaml)
 `r badger::badge_lifecycle("stable")`
 `r badger::badge_repostatus("Active")`
-[![HitCount](https://hits.dwyl.com/Pakillo/NetBayes.svg?style=flat-square)](https://hits.dwyl.com/Pakillo/NetBayes)
-[![HitCount](https://hits.dwyl.com/Pakillo/NetBayes.svg?style=flat-square&show=unique)](https://hits.dwyl.com/Pakillo/NetBayes)
+[![HitCount](https://hits.dwyl.com/Pakillo/BayesianWebs.svg?style=flat-square)](https://hits.dwyl.com/Pakillo/BayesianWebs)
+[![HitCount](https://hits.dwyl.com/Pakillo/BayesianWebs.svg?style=flat-square&show=unique)](https://hits.dwyl.com/Pakillo/BayesianWebs)
 <!-- badges: end -->
 
-The NetBayes R package facilitates modelling bipartite networks (like pollination, frugivory, or herbivory networks) using the Bayesian framework developed by [Young et al. (2021)](https://doi.org/10.1038/s41467-021-24149-x).
+The BayesianWebs R package facilitates modelling bipartite networks (like pollination, frugivory, or herbivory networks) using the Bayesian framework developed by [Young et al. (2021)](https://doi.org/10.1038/s41467-021-24149-x).
 
 Inferring the structure of bipartite networks from field (observational) data is a challenging task. Interaction data are hard to collect and require typically large sampling efforts, particularly to characterize infrequent interactions. Inferred network structure is highly sensitive to sampling design, effort, and completeness. Comparing networks from different studies without accounting for these sampling effects may lead to mistaken inferences. 
 
@@ -32,14 +32,14 @@ This package uses Bayesian modelling to infer the posterior probability of each 
 
 ## Installation
 
-You can install the development version of NetBayes from [GitHub](https://github.com/) with:
+You can install the development version of BayesianWebs from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("remotes")
-remotes::install_github("Pakillo/NetBayes")
+remotes::install_github("Pakillo/BayesianWebs")
 ```
 
-The package requires a working installation of [Stan](https://mc-stan.org/). If you don't have `CmdStan` installed, after installing `NetBayes` run:
+The package requires a working installation of [Stan](https://mc-stan.org/). If you don't have `CmdStan` installed, after installing `BayesianWebs` run:
 
 ```r
 cmdstanr::install_cmdstan()
@@ -49,7 +49,7 @@ cmdstanr::install_cmdstan()
 ## Example
 
 ```{r example}
-library(NetBayes)
+library(BayesianWebs)
 ```
 
 Let's infer the structure of an example dataset from [Kaiser-Bunbury et al. 2017](https://doi.org/10.1038/nature21071) as in Young et al. 2021:
@@ -123,10 +123,10 @@ plot_residuals(pred.df, data = dt, sort = FALSE)
 
 ## Citation
 
-If you use `NetBayes` please cite it:
+If you use `BayesianWebs` please cite it:
 
 ```{r comment=NA}
-citation("NetBayes")
+citation("BayesianWebs")
 ```
 
 

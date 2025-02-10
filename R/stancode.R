@@ -2,6 +2,7 @@
 #'
 #' @returns A string containing a Stan model.
 #' @author William K. Petry
+#' @noRd
 #' @keywords internal
 #' @export
 #'

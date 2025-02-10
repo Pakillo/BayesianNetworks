@@ -49,7 +49,7 @@ This function allows fits generalized variations of the bipartite network struct
 \examples{
 \dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 data(web)
-dt <- prepare_data(mat = web, sampl.eff = rep(20, nrow(web)))
+dt <- prepare_data(mat = web, plant_effort = rep(20, nrow(web)))
 # fit the model used by Young et al. 2021
 fit <- fit_model(dt, plant_effort = "param", animal_pref = "fixed",
                  plant_abun = "estimate", animal_abun = "estimate")

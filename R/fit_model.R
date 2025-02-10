@@ -21,7 +21,7 @@
 #'
 #' @examplesIf interactive()
 #' data(web)
-#' dt <- prepare_data(mat = web, sampl.eff = rep(20, nrow(web)))
+#' dt <- prepare_data(mat = web, plant_effort = rep(20, nrow(web)))
 #' # fit the model used by Young et al. 2021
 #' fit <- fit_model(dt, plant_effort = "param", animal_pref = "fixed",
 #'                  plant_abun = "estimate", animal_abun = "estimate")
@@ -44,18 +44,25 @@ fit_model <- function(data = NULL,
   animal_pref <- match.arg(animal_pref)
   plant_abun <- match.arg(plant_abun)
   animal_abun <- match.arg(animal_abun)
-  vars <- names(data)
 
   ## Check that data provided are suitable for the specified model variant
-  if(plant_effort == "data" & !"C" %in% vars) stop('Sampling effort, C, must be supplied in data when plant_effort = "data"')
-  if(plant_abun == "relative" & !"sigma" %in% vars) stop('Plant relative abundances, sigma, must be supplied in data when plant_abun = "relative"')
-  if(plant_abun == "absolute" & !"sigma" %in% vars) stop('Plant absolute abundances, sigma, must be supplied in data when plant_abun = "absolute"')
-  if(animal_abun == "relative" & !"tau" %in% vars) stop('Animal relative abundances, tau, must be supplied in data when animal_abun = "relative"')
-  if(animal_abun == "absolute" & !"tau" %in% vars) stop('Animal absolute abundances, tau, must be supplied in data when animal_abun = "absolute"')
-  if(plant_abun == "relative" & !all.equal(sum(data$sigma), 1)) stop("Plant relative abundances, sigma, must sum to 1.")
-  if(animal_abun == "relative" & !all.equal(sum(data$tau), 1)) stop("Animal relative abundances, tau, must sum to 1.")
-  if(plant_abun == "absolute" & all.equal(sum(data$sigma), 1)) warning("Plant absolute abundances, sigma, appear to be relative abundances.")
-  if(animal_abun == "absolute" & all.equal(sum(data$tau), 1)) warning("Animal absolute abundances, tau, appear to be relative abundances.")
+  if(plant_effort == "data" & is.null(data$C)) stop('Sampling effort, C, must be supplied in data when plant_effort = "data"')
+  if(plant_abun == "relative") {
+    if(is.null(data$sigma)) stop('Plant relative abundances, sigma, must be supplied in data when plant_abun = "relative"')
+    if(!all.equal(sum(data$sigma), 1)) stop("Plant relative abundances, sigma, must sum to 1.")
+  }
+  if(animal_abun == "relative") {
+    if(is.null(data$tau)) stop('Animal relative abundances, tau, must be supplied in data when animal_abun = "relative"')
+    if(!all.equal(sum(data$tau), 1)) stop("Animal relative abundances, tau, must sum to 1.")
+  }
+  if(plant_abun == "absolute") {
+    if(is.null(data$sigma)) stop('Plant absolute abundances, sigma, must be supplied in data when plant_abun = "absolute"')
+    if(all.equal(sum(data$sigma), 1)) warning("Plant absolute abundances, sigma, appear to be relative abundances.")
+  }
+  if(animal_abun == "absolute") {
+    if(is.null(data$tau)) stop('Animal relative abundances, tau, must be supplied in data when animal_abun = "absolute"')
+    if(all.equal(sum(data$tau), 1)) warning("Animal absolute abundances, tau, appear to be relative abundances.")
+  }
   stopifnot(beta > 0, alpha_sigma > 0, alpha_tau > 0)
 
   ## Add priors to data list

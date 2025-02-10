@@ -1,6 +1,7 @@
 #' Make Stan code
 #'
 #' @returns A string containing a Stan model.
+#' @author William K. Petry
 #' @keywords internal
 #' @export
 #'
@@ -27,16 +28,16 @@ stancode <- function(plant_effort = c("param", "data"),
     "  array[n_p, n_a] int<lower=0> M;\n",
     switch(plant_effort,
            param = "",
-           data = "  vector<lower=0> [n_p] C;\n"),
+           data = "  vector<lower=0>[n_p] C;\n"),
     "  real<lower=0> beta;\n",
     switch(plant_abun,
            estimate = "  real<lower=0> alpha_sigma;\n",
            relative = "  simplex[n_p] sigma;\n",
-           absolute = "  vector<lower=0> sigma;\n"),
+           absolute = "  vector<lower=0>[n_p] sigma;\n"),
     switch(animal_abun,
            estimate = "  real<lower=0> alpha_tau;\n",
            relative = "  simplex[n_a] tau;\n",
-           absolute = "  vector<lower=0> tau;\n"),
+           absolute = "  vector<lower=0>[n_a] tau;\n"),
     "}"
   )
 

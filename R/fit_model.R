@@ -52,10 +52,10 @@ fit_model <- function(data = NULL,
   if(plant_abun == "absolute" & !"sigma" %in% vars) stop('Plant absolute abundances, sigma, must be supplied in data when plant_abun = "absolute"')
   if(animal_abun == "relative" & !"tau" %in% vars) stop('Animal relative abundances, tau, must be supplied in data when animal_abun = "relative"')
   if(animal_abun == "absolute" & !"tau" %in% vars) stop('Animal absolute abundances, tau, must be supplied in data when animal_abun = "absolute"')
-  if(plant_abun == "relative" & !all.equal(data$sigma, 1)) stop("Plant relative abundances, sigma, must sum to 1.")
-  if(animal_abun == "relative" & !all.equal(data$tau, 1)) stop("Animal relative abundances, tau, must sum to 1.")
-  if(plant_abun == "absolute" & all.equal(data$sigma, 1)) warning("Plant absolute abundances, sigma, appear to be relative abundances.")
-  if(animal_abun == "absolute" & all.equal(data$tau, 1)) warning("Animal absolute abundances, tau, appear to be relative abundances.")
+  if(plant_abun == "relative" & !all.equal(sum(data$sigma), 1)) stop("Plant relative abundances, sigma, must sum to 1.")
+  if(animal_abun == "relative" & !all.equal(sum(data$tau), 1)) stop("Animal relative abundances, tau, must sum to 1.")
+  if(plant_abun == "absolute" & all.equal(sum(data$sigma), 1)) warning("Plant absolute abundances, sigma, appear to be relative abundances.")
+  if(animal_abun == "absolute" & all.equal(sum(data$tau), 1)) warning("Animal absolute abundances, tau, appear to be relative abundances.")
   stopifnot(beta > 0, alpha_sigma > 0, alpha_tau > 0)
 
   ## Add priors to data list

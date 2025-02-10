@@ -9,7 +9,7 @@
 #'
 #' @examplesIf interactive()
 #' data(web)
-#' dt <- prepare_data(mat = web, sampl.eff = rep(20, nrow(web)))
+#' dt <- prepare_data(mat = web, plant_effort = rep(20, nrow(web)))
 #' fit <- fit_model(dt, refresh = 0)
 #' get_posterior(fit, dt, param = "connectance")
 #'
@@ -32,30 +32,11 @@ get_posterior <- function(fit = NULL,
 
   # r = avg. visits from mutualists (preference)
   # rho = connectance
-  # sigma = plant.abund
-  # tau = animal.abund
+  # sigma = plant_abund
+  # tau = animal_abund
   # Q = interaction probability
 
   param <- match.arg(param)
-
-  params_all <- function(fit) {
-    if (fit$metadata()$model_name == "varying_preferences_model") {
-      out <- tidybayes::spread_draws(fit, rho, r[Animal], sigma[Plant], tau[Animal], Q[Plant, Animal])
-    } else {
-      out <- tidybayes::spread_draws(fit, rho, r, sigma[Plant], tau[Animal], Q[Plant, Animal])
-    }
-    return(out)
-  }
-
-  params_preference <- function(fit) {
-    if (fit$metadata()$model_name == "varying_preferences_model") {
-      out <- tidybayes::spread_draws(fit, r[Animal])
-    } else {
-      out <- tidybayes::spread_draws(fit, r)
-    }
-    return(out)
-  }
-
 
   post <- switch(
     param,
@@ -69,24 +50,21 @@ get_posterior <- function(fit = NULL,
   )
 
   # use more informative names
-  param.names <- c(
+  param_names <- c(
     connectance = "rho",
     preference = "r",
-    plant.abund = "sigma",
-    animal.abund = "tau",
-    int.prob = "Q")
+    plant_abund = "sigma",
+    animal_abund = "tau",
+    int_prob = "Q")
 
-  post <- dplyr::rename(post, dplyr::any_of(param.names))
+  post <- dplyr::rename(post, dplyr::any_of(param_names))
 
   ## generate posteriors of link existence
   if (param == "all" | param == "link") {
     post <- is_there_link(post)
   }
 
-
-
   ## rename plants and animals with original labels
-
   if ("Animal" %in% names(post)) {
     animals <- data.frame(Animal = 1:ncol(data$M), Animal.name = colnames(data$M))
     post <- post |>
@@ -102,6 +80,24 @@ get_posterior <- function(fit = NULL,
   }
 
   return(post)
+}
 
 
+
+params_all <- function(fit) {
+  if (any(grepl("^r\\[[0-9]+\\]$", tidybayes::get_variables(fit)))) {
+    out <- tidybayes::spread_draws(fit, rho, r[Animal], sigma[Plant], tau[Animal], Q[Plant, Animal])
+  } else {
+    out <- tidybayes::spread_draws(fit, rho, r, sigma[Plant], tau[Animal], Q[Plant, Animal])
+  }
+  return(out)
+}
+
+params_preference <- function(fit) {
+  if (any(grepl("^r\\[[0-9]+\\]$", tidybayes::get_variables(fit)))) {
+    out <- tidybayes::spread_draws(fit, r[Animal])
+  } else {
+    out <- tidybayes::spread_draws(fit, r)
+  }
+  return(out)
 }

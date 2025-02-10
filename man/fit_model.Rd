@@ -2,12 +2,17 @@
 % Please edit documentation in R/fit_model.R
 \name{fit_model}
 \alias{fit_model}
-\title{Fit model}
+\title{Fit bipartite network model}
 \usage{
 fit_model(
   data = NULL,
-  model = c("sampling_effort", "Young2021", "varying_preferences"),
+  plant_effort = c("param", "data"),
+  animal_pref = c("fixed", "varying"),
+  plant_abun = c("estimate", "relative", "absolute"),
+  animal_abun = c("estimate", "relative", "absolute"),
   beta = 0.01,
+  alpha_sigma = 1,
+  alpha_tau = 1,
   ...
 )
 }
@@ -15,28 +20,38 @@ fit_model(
 \item{data}{A named list containing the required data, as obtained from
 \code{\link[=prepare_data]{prepare_data()}}.}
 
-\item{model}{character. One of "Young2021", "sampling_effort", or
-"varying_preferences", or a path to a file describing the Stan model in case
-you want to use a modified Stan model.}
+\item{plant_effort}{The sampling effort allocated to each plant. If unknown, \code{param} (default) estimates a single parameter during the modelling step that applies to all plants. Alternatively, "data" allows measured values of sampling effort to be supplied in \code{data}.}
 
-\item{beta}{Rate of exponential prior on \code{r} (preference) parameter.
-Default beta is 0.01. Increase it if you have large count numbers
-(can examine the resultant prior using \code{\link[=plot_prior]{plot_prior()}}).}
+\item{animal_pref}{Controls the relative preference of animals for linked plants. \code{fixed} (default), fits a single preference parameter for all animals during the modelling step. \code{varying} fits a separate preference parameter for each animal type.}
 
-\item{...}{Further arguments for \code{\link[cmdstanr:model-method-sample]{cmdstanr::sample()}}, like \code{iter_warmup},
-\code{iter_sampling}, or \code{thin}, among others. It is recommended to increase the
-number of iterations (e.g. iter_sampling = 10000).}
+\item{plant_abun}{Controls how the model accounts for plant abundances. \code{estimate} (default) estimates the latent relative abundance of each plant type. \code{relative} allows the user to pass a simplex containing the relative abundances of each plant. \code{absolute} allows the user to supply the absolute abundances of each plant.}
+
+\item{animal_abun}{Controls how the model accounts for animal abundances. "estimate" (default) estimates the latent relative abundance of each animal type. "relative" allows the user to pass a simplex containing the relative abundances of each animal. \code{absolute} allows the user to supply the absolute abundances of each animal.}
+
+\item{beta}{Rate parameter of exponential prior on \code{r} (preference) parameter. The defaults, 0.01, is suitable for small counts and should be increased for larger counts. Use \code{plot_prior} to visualize.}
+
+\item{alpha_sigma}{Concentration parameter of Dirichlet prior on \code{sigma} (relative abundances of plants). Only used when \code{plant_abun = "estimate"}. Defaults to 1. Use \code{plot_prior} to visualize.}
+
+\item{alpha_tau}{Concentration parameter of Dirichlet prior on \code{tau} (relative abundances of animals). Only used when \code{animal_abun = "estimate"}. Defaults to 1.  Use \code{plot_prior} to visualize.}
+
+\item{...}{Further arguments passed to \code{\link[cmdstanr:model-method-sample]{cmdstanr::sample()}}, like \code{iter_warmup},
+\code{iter_sampling}, or \code{thin}, among others.}
 }
 \value{
 A fitted model (\code{\link[cmdstanr:CmdStanMCMC]{cmdstanr::CmdStanMCMC()}} object).
 }
 \description{
-Fit model
+Fit bipartite network model
+}
+\details{
+This function allows fits generalized variations of the bipartite network structure model of Young et al. 2021 \href{https://doi.org/10.1038\%2Fs41467-021-24149-x}{\url{doi:10.1038/s41467-021-24149-x}}.
 }
 \examples{
 \dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 data(web)
 dt <- prepare_data(mat = web, sampl.eff = rep(20, nrow(web)))
-fit <- fit_model(dt)
+# fit the model used by Young et al. 2021
+fit <- fit_model(dt, plant_effort = "param", animal_pref = "fixed",
+                 plant_abun = "estimate", animal_abun = "estimate")
 \dontshow{\}) # examplesIf}
 }

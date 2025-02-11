@@ -5,6 +5,7 @@
 #' @param param character. Name of the parameter to retrieve the posterior samples.
 #'
 #' @return A data frame
+#' @importFrom rlang parse_exprs !!!
 #' @export
 #'
 #' @examplesIf interactive()
@@ -29,22 +30,37 @@ get_posterior <- function(fit = NULL,
                                     "animal.abund",
                                     "int.prob",
                                     "link")) {
-
-  # r = avg. visits from mutualists (preference)
-  # rho = connectance
-  # sigma = plant_abund
-  # tau = animal_abund
-  # Q = interaction probability
-
+  ## parse arguments & construct parameter set to extract
   param <- match.arg(param)
+  all_vars <- tidybayes::get_variables(fit)
+  if (sum(grepl("^r(\\[\\d+\\])?$", all_vars)) > 1) {
+    sel_r <- "r[Animal]"
+  } else {
+    sel_r <- "r"
+  }
+  if (sum(grepl("^sigma", all_vars)) > 1) {
+    sel_sigma <- "sigma[Plant]"
+  } else if (sum(grepl("^sigma", all_vars)) == 1) {
+    sel_sigma <- "sigma"
+  } else {
+    sel_sigma <- NULL
+  }
+  if (sum(grepl("^tau", all_vars)) > 1) {
+    sel_tau <- "tau[Animal]"
+  } else if (sum(grepl("^tau", all_vars)) == 1) {
+    sel_tau <- "tau"
+  } else {
+    sel_tau <- NULL
+  }
 
   post <- switch(
     param,
-    all = params_all(fit),
+    all = tidybayes::spread_draws(fit, !!!rlang::parse_exprs(c("rho", sel_r, sel_sigma,
+                                                               sel_tau, "Q[Plant, Animal]"))),
     connectance = tidybayes::spread_draws(fit, rho),
-    preference = params_preference(fit),
-    plant.abund = tidybayes::spread_draws(fit, sigma[Plant]),
-    animal.abund = tidybayes::spread_draws(fit, tau[Animal]),
+    preference = tidybayes::spread_draws(fit, !!!rlang::parse_exprs(sel_r)),
+    plant.abund = tidybayes::spread_draws(fit, !!!rlang::parse_exprs(sel_sigma)),
+    animal.abund = tidybayes::spread_draws(fit, !!!rlang::parse_exprs(sel_tau)),
     int.prob = tidybayes::spread_draws(fit, Q[Plant, Animal]),
     link = tidybayes::spread_draws(fit, Q[Plant, Animal]),
   )
@@ -80,24 +96,4 @@ get_posterior <- function(fit = NULL,
   }
 
   return(post)
-}
-
-
-
-params_all <- function(fit) {
-  if (any(grepl("^r\\[[0-9]+\\]$", tidybayes::get_variables(fit)))) {
-    out <- tidybayes::spread_draws(fit, rho, r[Animal], sigma[Plant], tau[Animal], Q[Plant, Animal])
-  } else {
-    out <- tidybayes::spread_draws(fit, rho, r, sigma[Plant], tau[Animal], Q[Plant, Animal])
-  }
-  return(out)
-}
-
-params_preference <- function(fit) {
-  if (any(grepl("^r\\[[0-9]+\\]$", tidybayes::get_variables(fit)))) {
-    out <- tidybayes::spread_draws(fit, r[Animal])
-  } else {
-    out <- tidybayes::spread_draws(fit, r)
-  }
-  return(out)
 }

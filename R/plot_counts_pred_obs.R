@@ -27,10 +27,10 @@ plot_counts_pred_obs <- function(pred_df = NULL, data = NULL, byplant = FALSE, .
                                  .point = mean, ...) {
 
   obs <- data$M |>
-    network.tools::wide2long(int.name = "Count.obs")
+    network.tools::wide2long(int.name = "Count_obs")
 
   pred <- pred_df |>
-    dplyr::select(Plant, Animal, Count.pred = count) |>
+    dplyr::select(Plant, Animal, Count_pred = count) |>
     tidybayes::point_interval(.width = .width, .point = .point) |>
     dplyr::left_join(obs, by = c("Plant", "Animal"))
 
@@ -40,12 +40,12 @@ plot_counts_pred_obs <- function(pred_df = NULL, data = NULL, byplant = FALSE, .
 
   if (isTRUE(byplant)) {
     gg <- gg +
-      tidybayes::geom_pointinterval(ggplot2::aes(x = Count.obs, y = Count.pred,
+      tidybayes::geom_pointinterval(ggplot2::aes(x = Count_obs, y = Count_pred,
                                         ymin = .lower, ymax = .upper)) +
       ggplot2::facet_wrap(~Plant, ...)
   } else {
     gg <- gg +
-      tidybayes::geom_pointinterval(ggplot2::aes(x = Count.obs, y = Count.pred,
+      tidybayes::geom_pointinterval(ggplot2::aes(x = Count_obs, y = Count_pred,
                                         ymin = .lower, ymax = .upper),
                                     ...)
   }

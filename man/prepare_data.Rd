@@ -14,9 +14,9 @@ consumed per plant or species). Plants must be in rows, Animals must be in colum
 \item{plant_effort}{A numeric vector with the sampling effort (e.g. observation hours)
 spent on each plant.}
 
-\item{plant_abun}{(optional) A numeric vector with the relative or absolute abundances of each plant.}
+\item{plant_abun}{(optional) A numeric vector with the relative or absolute interacting abundances of each plant.}
 
-\item{animal_abun}{(optional) A numeric vector with the relative or absolute abundances of each animal.}
+\item{animal_abun}{(optional) A numeric vector with the relative or absolute interacting abundances of each animal.}
 }
 \value{
 A named list containing data to be passed to the bipartite network model.

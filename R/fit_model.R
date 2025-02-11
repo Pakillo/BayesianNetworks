@@ -2,13 +2,13 @@
 #'
 #' @param data A named list containing the required data, as obtained from
 #'  [prepare_data()].
-#' @param plant_effort The sampling effort allocated to each plant. If unknown, `param` (default) estimates a single parameter during the modelling step that applies to all plants. Alternatively, "data" allows measured values of sampling effort to be supplied in `data`.
-#' @param animal_pref Controls the relative preference of animals for linked plants. `fixed` (default), fits a single preference parameter for all animals during the modelling step. `varying` fits a separate preference parameter for each animal type.
-#' @param plant_abun Controls how the model accounts for plant abundances. `estimate` (default) estimates the latent relative abundance of each plant type. `relative` allows the user to pass a simplex containing the relative abundances of each plant. `absolute` allows the user to supply the absolute abundances of each plant.
-#' @param animal_abun Controls how the model accounts for animal abundances. "estimate" (default) estimates the latent relative abundance of each animal type. "relative" allows the user to pass a simplex containing the relative abundances of each animal. `absolute` allows the user to supply the absolute abundances of each animal.
-#' @param beta Rate parameter of exponential prior on `r` (preference) parameter. The defaults, 0.01, is suitable for small counts and should be increased for larger counts. Use `plot_prior` to visualize.
-#' @param alpha_sigma Concentration parameter of Dirichlet prior on `sigma` (relative abundances of plants). Only used when `plant_abun = "estimate"`. Defaults to 1. Use `plot_prior` to visualize.
-#' @param alpha_tau Concentration parameter of Dirichlet prior on `tau` (relative abundances of animals). Only used when `animal_abun = "estimate"`. Defaults to 1.  Use `plot_prior` to visualize.
+#' @param plant_effort How to model the sampling effort allocated to each plant. If unknown, `param` (default) estimates a single parameter during the modelling step that applies to all plants, \eqn{C}. Alternatively, "data" allows measured values of sampling effort to be supplied in `data`, \eqn{C_i}.
+#' @param animal_pref How to model the increase in visits of animals to plants with which they share a link relative to unlinked plants. `fixed` (default), fits a single preference parameter for all animals during the modelling step, \eqn{r}. `varying` fits a separate preference parameter for each animal type, \eqn{r_i}.
+#' @param plant_abun How the model treats the abundances of interacting plants. `param` (default) treats these abundances as a parameter that the model estimates, \eqn{sigma_i}. `data` treats these abundances as measured and requires the user to supply the absolute abundances of each plant in `data`.
+#' @param animal_abun How the model treats the abundances of interacting animals. `param` (default) treats these abundances as a parameter that the model estimates, \eqn{sigma_i}. `data` treats these abundances as measured and requires the user to supply the absolute abundances of each animal in `data`.
+#' @param beta Rate parameter of exponential prior on the preference parameter or parameters \eqn{r} or \eqn{r_i}. The default, 0.01, is suitable for small counts and should be increased for larger counts. Use `plot_prior` to visualize.
+#' @param alpha_sigma Concentration parameters of Dirichlet prior on the abundances of interacting plants, \eqn{sigma_i}, when `plant_abun = "param"`. Ignored otherwise. Defaults to 1.
+#' @param alpha_tau Concentration parameters of Dirichlet prior on the abundances of interacting plants, \eqn{tau_i}, when `animal_abun = "param"`. Ignored otherwise. Defaults to 1.
 #' @param ... Further arguments passed to [cmdstanr::sample()], like `iter_warmup`,
 #' `iter_sampling`, or `thin`, among others.
 #'
@@ -24,13 +24,13 @@
 #' dt <- prepare_data(mat = web, plant_effort = rep(20, nrow(web)))
 #' # fit the model used by Young et al. 2021
 #' fit <- fit_model(dt, plant_effort = "param", animal_pref = "fixed",
-#'                  plant_abun = "estimate", animal_abun = "estimate")
+#'                  plant_abun = "param", animal_abun = "param")
 
 fit_model <- function(data = NULL,
                       plant_effort = c("param", "data"),
                       animal_pref = c("fixed", "varying"),
-                      plant_abun = c("estimate", "relative", "absolute"),
-                      animal_abun = c("estimate", "relative", "absolute"),
+                      plant_abun = c("param", "data"),
+                      animal_abun = c("param", "data"),
                       beta = 0.01,
                       alpha_sigma = 1,
                       alpha_tau = 1,
@@ -47,21 +47,11 @@ fit_model <- function(data = NULL,
 
   ## Check that data provided are suitable for the specified model variant
   if(plant_effort == "data" & is.null(data$C)) stop('Sampling effort, C, must be supplied in data when plant_effort = "data"')
-  if(plant_abun == "relative") {
-    if(is.null(data$sigma)) stop('Plant relative abundances, sigma, must be supplied in data when plant_abun = "relative"')
-    if(!all.equal(sum(data$sigma), 1)) stop("Plant relative abundances, sigma, must sum to 1.")
+  if(plant_abun == "data") {
+    if(is.null(data$abun_p)) stop('Plant abundances, abun_p, must be supplied in `data` when plant_abun = "data"')
   }
-  if(animal_abun == "relative") {
-    if(is.null(data$tau)) stop('Animal relative abundances, tau, must be supplied in data when animal_abun = "relative"')
-    if(!all.equal(sum(data$tau), 1)) stop("Animal relative abundances, tau, must sum to 1.")
-  }
-  if(plant_abun == "absolute") {
-    if(is.null(data$sigma)) stop('Plant absolute abundances, sigma, must be supplied in data when plant_abun = "absolute"')
-    if(all.equal(sum(data$sigma), 1)) warning("Plant absolute abundances, sigma, appear to be relative abundances.")
-  }
-  if(animal_abun == "absolute") {
-    if(is.null(data$tau)) stop('Animal relative abundances, tau, must be supplied in data when animal_abun = "absolute"')
-    if(all.equal(sum(data$tau), 1)) warning("Animal absolute abundances, tau, appear to be relative abundances.")
+  if(animal_abun == "data") {
+    if(is.null(data$abun_a)) stop('Animal abundances, abun_a, must be supplied in `data` when animal_abun = "data"')
   }
   stopifnot(beta > 0, alpha_sigma > 0, alpha_tau > 0)
 

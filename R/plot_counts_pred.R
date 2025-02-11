@@ -19,7 +19,7 @@
 
 plot_counts_pred <- function(pred_df = NULL, .width = 0.95, .point = mean, ...) {
 
-  pred.df |>
+  pred_df |>
     dplyr::select(Plant, Animal, count) |>
     tidybayes::point_interval(.width = .width, .point = .point) |>
     network.tools::plot_web_heatmap(int.var = "count", ...) +

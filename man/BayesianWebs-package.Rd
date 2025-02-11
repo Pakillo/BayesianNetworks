@@ -19,5 +19,10 @@ Useful links:
 \author{
 \strong{Maintainer}: Francisco Rodriguez-Sanchez \email{f.rodriguez.sanc@gmail.com} (\href{https://orcid.org/0000-0002-7981-1599}{ORCID})
 
+Other contributors:
+\itemize{
+  \item William K. Petry \email{wpetry@ncsu.edu} (\href{https://orcid.org/0000-0002-5230-5987}{ORCID}) [contributor]
+}
+
 }
 \keyword{internal}

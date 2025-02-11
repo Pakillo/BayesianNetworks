@@ -5,8 +5,8 @@
 #' consumed per plant or species). Plants must be in rows, Animals must be in columns.
 #' @param plant_effort A numeric vector with the sampling effort (e.g. observation hours)
 #' spent on each plant.
-#' @param plant_abun (optional) A numeric vector with the relative or absolute abundances of each plant.
-#' @param animal_abun (optional) A numeric vector with the relative or absolute abundances of each animal.
+#' @param plant_abun (optional) A numeric vector with the relative or absolute interacting abundances of each plant.
+#' @param animal_abun (optional) A numeric vector with the relative or absolute interacting abundances of each animal.
 #'
 #' @return A named list containing data to be passed to the bipartite network model.
 #' @export
@@ -44,7 +44,7 @@ prepare_data <- function(mat, plant_effort = NULL, plant_abun = NULL, animal_abu
 
   ## Prepare data list, dropping NULL elements
   dt <- list(M = mat, n_p = nrow(mat), n_a = ncol(mat), C = plant_effort,
-             sigma = plant_abun, tau = animal_abun)
+             abs_sigma = plant_abun, abs_tau = animal_abun)
   dt <- Filter(Negate(is.null), dt)
   return(dt)
 }

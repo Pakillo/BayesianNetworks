@@ -8,8 +8,8 @@ fit_model(
   data = NULL,
   plant_effort = c("param", "data"),
   animal_pref = c("fixed", "varying"),
-  plant_abun = c("estimate", "relative", "absolute"),
-  animal_abun = c("estimate", "relative", "absolute"),
+  plant_abun = c("param", "data"),
+  animal_abun = c("param", "data"),
   beta = 0.01,
   alpha_sigma = 1,
   alpha_tau = 1,
@@ -20,19 +20,19 @@ fit_model(
 \item{data}{A named list containing the required data, as obtained from
 \code{\link[=prepare_data]{prepare_data()}}.}
 
-\item{plant_effort}{The sampling effort allocated to each plant. If unknown, \code{param} (default) estimates a single parameter during the modelling step that applies to all plants. Alternatively, "data" allows measured values of sampling effort to be supplied in \code{data}.}
+\item{plant_effort}{How to model the sampling effort allocated to each plant. If unknown, \code{param} (default) estimates a single parameter during the modelling step that applies to all plants, \eqn{C}. Alternatively, "data" allows measured values of sampling effort to be supplied in \code{data}, \eqn{C_i}.}
 
-\item{animal_pref}{Controls the relative preference of animals for linked plants. \code{fixed} (default), fits a single preference parameter for all animals during the modelling step. \code{varying} fits a separate preference parameter for each animal type.}
+\item{animal_pref}{How to model the increase in visits of animals to plants with which they share a link relative to unlinked plants. \code{fixed} (default), fits a single preference parameter for all animals during the modelling step, \eqn{r}. \code{varying} fits a separate preference parameter for each animal type, \eqn{r_i}.}
 
-\item{plant_abun}{Controls how the model accounts for plant abundances. \code{estimate} (default) estimates the latent relative abundance of each plant type. \code{relative} allows the user to pass a simplex containing the relative abundances of each plant. \code{absolute} allows the user to supply the absolute abundances of each plant.}
+\item{plant_abun}{How the model treats the abundances of interacting plants. \code{param} (default) treats these abundances as a parameter that the model estimates, \eqn{sigma_i}. \code{data} treats these abundances as measured and requires the user to supply the absolute abundances of each plant in \code{data}.}
 
-\item{animal_abun}{Controls how the model accounts for animal abundances. "estimate" (default) estimates the latent relative abundance of each animal type. "relative" allows the user to pass a simplex containing the relative abundances of each animal. \code{absolute} allows the user to supply the absolute abundances of each animal.}
+\item{animal_abun}{How the model treats the abundances of interacting animals. \code{param} (default) treats these abundances as a parameter that the model estimates, \eqn{sigma_i}. \code{data} treats these abundances as measured and requires the user to supply the absolute abundances of each animal in \code{data}.}
 
-\item{beta}{Rate parameter of exponential prior on \code{r} (preference) parameter. The defaults, 0.01, is suitable for small counts and should be increased for larger counts. Use \code{plot_prior} to visualize.}
+\item{beta}{Rate parameter of exponential prior on the preference parameter or parameters \eqn{r} or \eqn{r_i}. The default, 0.01, is suitable for small counts and should be increased for larger counts. Use \code{plot_prior} to visualize.}
 
-\item{alpha_sigma}{Concentration parameter of Dirichlet prior on \code{sigma} (relative abundances of plants). Only used when \code{plant_abun = "estimate"}. Defaults to 1. Use \code{plot_prior} to visualize.}
+\item{alpha_sigma}{Concentration parameters of Dirichlet prior on the abundances of interacting plants, \eqn{sigma_i}, when \code{plant_abun = "param"}. Ignored otherwise. Defaults to 1.}
 
-\item{alpha_tau}{Concentration parameter of Dirichlet prior on \code{tau} (relative abundances of animals). Only used when \code{animal_abun = "estimate"}. Defaults to 1.  Use \code{plot_prior} to visualize.}
+\item{alpha_tau}{Concentration parameters of Dirichlet prior on the abundances of interacting plants, \eqn{tau_i}, when \code{animal_abun = "param"}. Ignored otherwise. Defaults to 1.}
 
 \item{...}{Further arguments passed to \code{\link[cmdstanr:model-method-sample]{cmdstanr::sample()}}, like \code{iter_warmup},
 \code{iter_sampling}, or \code{thin}, among others.}
@@ -52,6 +52,6 @@ data(web)
 dt <- prepare_data(mat = web, plant_effort = rep(20, nrow(web)))
 # fit the model used by Young et al. 2021
 fit <- fit_model(dt, plant_effort = "param", animal_pref = "fixed",
-                 plant_abun = "estimate", animal_abun = "estimate")
+                 plant_abun = "param", animal_abun = "param")
 \dontshow{\}) # examplesIf}
 }

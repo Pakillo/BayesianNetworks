@@ -1,6 +1,6 @@
 Package: BayesianWebs
 Title: Bayesian Modelling of Bipartite Networks
-Version: 0.0.7
+Version: 0.0.8
 Authors@R: 
     c(
       person("Francisco", "Rodriguez-Sanchez", , "f.rodriguez.sanc@gmail.com", role = c("aut", "cre"),

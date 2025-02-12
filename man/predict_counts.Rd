@@ -21,7 +21,7 @@ interaction.
 \examples{
 \dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 data(web)
-dt <- prepare_data(mat = web, sampl.eff = rep(20, nrow(web)))
+dt <- prepare_data(mat = web, plant_effort = rep(20, nrow(web)))
 fit <- fit_model(dt, refresh = 0)
 predict_counts(fit, dt)
 \dontshow{\}) # examplesIf}

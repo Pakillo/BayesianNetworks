@@ -20,7 +20,7 @@
 #'
 #' ## Providing fitted model
 #' data(web)
-#' dt <- prepare_data(mat = web, sampl.eff = rep(20, nrow(web)))
+#' dt <- prepare_data(mat = web, plant_effort = rep(20, nrow(web)))
 #' fit <- fit_model(dt, refresh = 0)
 #' plot_prior(fit = fit, data = dt)
 
@@ -66,14 +66,9 @@ plot_prior <- function(beta = NULL, fit = NULL, data = NULL) {
         ggplot2::geom_density(ggplot2::aes(preference),
                               bounds = c(0, Inf), fill = "grey90",
                               data = df.post, alpha = 0.5)
-
-
     }
-
   }
-
   return(gg)
-
 }
 
 
@@ -81,6 +76,6 @@ plot_prior <- function(beta = NULL, fit = NULL, data = NULL) {
 get_beta <- function(fit = NULL) {
   datafile <- readLines(fit$data_file())  # reading json
   beta.info <- datafile[grep("beta", datafile)]
-  beta <- as.numeric(gsub('.*beta\": ', "", beta.info))
+  beta <- as.numeric(regmatches(beta.info, regexpr("\\d+(?:\\.\\d+)?(?:[eE][-+]?\\d+)?", beta.info)))
   return(beta)
 }

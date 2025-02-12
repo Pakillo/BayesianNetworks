@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">BayesianWebs</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.7</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.8</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,7 +38,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">prepare_data</span><span class="op">(</span>mat <span class="op">=</span> <span class="cn">NULL</span>, sampl.eff <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">prepare_data</span><span class="op">(</span><span class="va">mat</span>, plant_effort <span class="op">=</span> <span class="cn">NULL</span>, plant_abun <span class="op">=</span> <span class="cn">NULL</span>, animal_abun <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -46,25 +46,33 @@
 
 
 <dl><dt id="arg-mat">mat<a class="anchor" aria-label="anchor" href="#arg-mat"></a></dt>
-<dd><p>An integer matrix containing quantitative (not qualitative or binary)
-count data con interaction frequency (e.g. visits to flowers, number of fruits
+<dd><p>A matrix containing quantitative counts (not qualitative or binary)
+of observed interactions (e.g. visits to flowers, number of fruits
 consumed per plant or species). Plants must be in rows, Animals must be in columns.</p></dd>
 
 
-<dt id="arg-sampl-eff">sampl.eff<a class="anchor" aria-label="anchor" href="#arg-sampl-eff"></a></dt>
+<dt id="arg-plant-effort">plant_effort<a class="anchor" aria-label="anchor" href="#arg-plant-effort"></a></dt>
 <dd><p>A numeric vector with the sampling effort (e.g. observation hours)
 spent on each plant.</p></dd>
+
+
+<dt id="arg-plant-abun">plant_abun<a class="anchor" aria-label="anchor" href="#arg-plant-abun"></a></dt>
+<dd><p>(optional) A numeric vector with the relative or absolute interacting abundances of each plant.</p></dd>
+
+
+<dt id="arg-animal-abun">animal_abun<a class="anchor" aria-label="anchor" href="#arg-animal-abun"></a></dt>
+<dd><p>(optional) A numeric vector with the relative or absolute interacting abundances of each animal.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A named list with all the data required to run the model.</p>
+    <p>A named list containing data to be passed to the bipartite network model.</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">web</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">prepare_data</span><span class="op">(</span><span class="va">web</span>, sampl.eff <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">20</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">web</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">prepare_data</span><span class="op">(</span><span class="va">web</span>, plant_effort <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">20</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">web</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $M</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    A1 A2 A3 A4 A5 A6 A7 A8 A9 A10 A11 A12 A13 A14 A15 A16 A17 A18 A19 A20 A21</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> P1  0  0  3  1  0  0  0  0  0   0   0   0   0   4   0   0   0   0   0   0   0</span>

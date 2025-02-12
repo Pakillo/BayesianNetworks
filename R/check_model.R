@@ -9,7 +9,7 @@
 #'
 #' @examplesIf interactive()
 #' data(web)
-#' dt <- prepare_data(mat = web, sampl.eff = rep(20, nrow(web)))
+#' dt <- prepare_data(mat = web, plant_effort = rep(20, nrow(web)))
 #' fit <- fit_model(dt, refresh = 0)
 #' check_model(fit, data = data)
 
@@ -38,9 +38,3 @@ check_lp <- function(fit = NULL) {
   gg
 
 }
-
-
-
-
-
-

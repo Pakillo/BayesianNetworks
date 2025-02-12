@@ -4,23 +4,27 @@
 \alias{prepare_data}
 \title{Prepare the data for modelling}
 \usage{
-prepare_data(mat = NULL, sampl.eff = NULL)
+prepare_data(mat, plant_effort = NULL, plant_abun = NULL, animal_abun = NULL)
 }
 \arguments{
-\item{mat}{An integer matrix containing quantitative (not qualitative or binary)
-count data con interaction frequency (e.g. visits to flowers, number of fruits
+\item{mat}{A matrix containing quantitative counts (not qualitative or binary)
+of observed interactions (e.g. visits to flowers, number of fruits
 consumed per plant or species). Plants must be in rows, Animals must be in columns.}
 
-\item{sampl.eff}{A numeric vector with the sampling effort (e.g. observation hours)
+\item{plant_effort}{A numeric vector with the sampling effort (e.g. observation hours)
 spent on each plant.}
+
+\item{plant_abun}{(optional) A numeric vector with the relative or absolute interacting abundances of each plant.}
+
+\item{animal_abun}{(optional) A numeric vector with the relative or absolute interacting abundances of each animal.}
 }
 \value{
-A named list with all the data required to run the model.
+A named list containing data to be passed to the bipartite network model.
 }
 \description{
 Prepare the data for modelling
 }
 \examples{
 data(web)
-prepare_data(web, sampl.eff = rep(20, nrow(web)))
+prepare_data(web, plant_effort = rep(20, nrow(web)))
 }

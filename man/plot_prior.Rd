@@ -31,7 +31,7 @@ plot_prior(beta = 0.001)
 
 ## Providing fitted model
 data(web)
-dt <- prepare_data(mat = web, sampl.eff = rep(20, nrow(web)))
+dt <- prepare_data(mat = web, plant_effort = rep(20, nrow(web)))
 fit <- fit_model(dt, refresh = 0)
 plot_prior(fit = fit, data = dt)
 \dontshow{\}) # examplesIf}

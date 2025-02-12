@@ -23,10 +23,12 @@ Imports:
     network.tools,
     tidybayes
 Suggests:
-    rlang
+    rlang,
+    testthat (>= 3.0.0)
 Remotes:
     stan-dev/cmdstanr,
     Pakillo/network.tools
 Depends: 
     R (>= 4.1)
 LazyData: true
+Config/testthat/edition: 3

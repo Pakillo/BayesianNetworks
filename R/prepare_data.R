@@ -18,12 +18,13 @@
 prepare_data <- function(mat, plant_effort = NULL, plant_abun = NULL, animal_abun = NULL) {
   ## Checks
   stopifnot(is.matrix(mat))
-  if (!is.integer(mat) & all(mat == as.integer(mat))) stop("Elements of 'mat' must be integers.")
+  if (!is.integer(mat) & !all(mat == as.integer(mat))) stop("Elements of 'mat' must be integers.")
   if (min(mat) < 0) stop("Elements of 'mat' must be >=0.")
   if (max(mat) == 1) warning("'mat' should be a quantitative (not qualitative/binary) matrix with count data. Are you sure the maximum observed count is 1?")
   if (!is.null(plant_effort)) {
     stopifnot(length(plant_effort) == nrow(mat))
     stopifnot(is.numeric(plant_effort))
+    stopifnot(all(plant_effort > 0))
     if (max(plant_effort) > 100) warning("Large values for `plant_effort` may interfere with sampling efficiency and model convergence. Consider rescaling to different units (e.g. hours instead of minutes) to obtain values <100.")
   }
   if (!is.null(plant_abun)) {

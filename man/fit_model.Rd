@@ -30,9 +30,9 @@ fit_model(
 
 \item{beta}{Rate parameter of exponential prior on the preference parameter or parameters \eqn{r} or \eqn{r_i}. The default, 0.01, is suitable for small counts and should be increased for larger counts. Use \code{plot_prior} to visualize.}
 
-\item{alpha_sigma}{Concentration parameters of Dirichlet prior on the abundances of interacting plants, \eqn{sigma_i}, when \code{plant_abun = "param"}. Ignored otherwise. Defaults to 1.}
+\item{alpha_sigma}{Vector of concentration parameters for Dirichlet prior on the relative abundances of interacting plants, \eqn{sigma_i}, when \code{plant_abun = "param"}. Ignored otherwise. Defaults to 1.}
 
-\item{alpha_tau}{Concentration parameters of Dirichlet prior on the abundances of interacting plants, \eqn{tau_i}, when \code{animal_abun = "param"}. Ignored otherwise. Defaults to 1.}
+\item{alpha_tau}{Concentration parameters of Dirichlet prior on the relative abundances of interacting plants, \eqn{tau_i}, when \code{animal_abun = "param"}. Ignored otherwise. Defaults to 1.}
 
 \item{...}{Further arguments passed to \code{\link[cmdstanr:model-method-sample]{cmdstanr::sample()}}, like \code{iter_warmup},
 \code{iter_sampling}, or \code{thin}, among others.}
@@ -45,6 +45,29 @@ Fit bipartite network model
 }
 \details{
 This function allows fits generalized variations of the bipartite network structure model of Young et al. 2021 \href{https://doi.org/10.1038\%2Fs41467-021-24149-x}{\url{doi:10.1038/s41467-021-24149-x}}.
+
+Briefly, the observed interaction count between each plant and animal pair is treated as a random draw from a Poisson distribution with a mean of:
+\deqn{\mu_{ij} = C_i\sigma_i\tau_j\left(1 + r_iB_{ij}\right).}
+Here, the subscripts \eqn{i} and \eqn{j} are indices that correspond to the plant (row) and animal (column) species, respectively. \eqn{C_i} is the observer's sampling effort allocated to each plant species; we expect to see more interactions with plants the longer they are observed. \sigma_i and \tau_i are the relative contributions of each plant and animal to the total pool of interactions. We expect to observe higher interaction counts for species that contribute most to the interactions made by their guild. The observed interaction count should be compounded when species of both guilds are those that are most interactive. Importantly, these terms capture more than just each species' relative abundances in the their guild. An animal that is highly active but numerically rare animal could have a higher \eqn{\tau_i} than a numerically dominant, but less active animal. \eqn{r_i} is the increase in visits of animals to plants with which they share a link relative to unlinked plants, and \eqn{B_{ij}} is the inferred absence (0) or presence (1) of a link between the plant-animal pair.
+\subsection{Prior recommendations}{
+
+The default priors are very weak to accommodate a wide range of empirical datasets. They may fail for exceptional datasets and they do not capture system-specific prior information that users may have from additional data.
+\subsection{Animal preference, \eqn{r_i}}{
+
+The animal preference parameter has an exponential prior with a rate parameter \code{beta}. The default, \eqn{\mathrm{Exponential}(0.01)}, implies a mean of 1/0.01 = 100 with 95\% of the probability mass falling between about 2.5-370. Increase \code{beta} for animal communities that weakly increase visitation in the presence of a link, or decrease for communities that strongly increase visitation in the presence of a link.
+}
+
+\subsection{Relative interaction abundances for plants, \eqn{\sigma_i}}{
+
+The relative interaction abundances for plants has a Dirichlet prior that accepts a vector of concentration parameters, \code{alpha_sigma}, with a length equal to the number of plant species (rows) in the interaction matrix. The default, \eqn{\mathrm{Dir}(1, ..., 1)}, implies a uniform distribution of proportions. Increasing some of the concentration parameters will shift the probability mass to favor higher relative interaction abundances for the corresponding plants. Increasing all concentration parameters while maintaining their relative sizes reduces the variance.
+}
+
+\subsection{Relative interaction abundances for animals, \eqn{\tau_j}}{
+
+The relative interaction abundances for animals has a Dirichlet prior that accepts a vector of concentration parameters, \code{alpha_tau}, with a length equal to the number of animal species (columns) in the interaction matrix. The default, \eqn{\mathrm{Dir}(1, ..., 1)}, implies a uniform distribution of proportions. Increasing some of the concentration parameters will shift the probability mass to favor higher relative interaction abundances for the corresponding animals Increasing all concentration parameters while maintaining their relative sizes reduces the variance.
+}
+
+}
 }
 \examples{
 \dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
@@ -53,5 +76,11 @@ dt <- prepare_data(mat = web, plant_effort = rep(20, nrow(web)))
 # fit the model used by Young et al. 2021
 fit <- fit_model(dt, plant_effort = "param", animal_pref = "fixed",
                  plant_abun = "param", animal_abun = "param")
+# changing options and priors
+fit2 <- fit_model(dt, plant_effort = "data", animal_pref = "varying",
+                  plant_abun = "param", animal_abun = "param",
+                  beta = rep(0.01, 21),
+                  alpha_sigma = c(2.5, 3, 4, 3, 1, 1, 5, 2),
+                  alpha_tau = 2)
 \dontshow{\}) # examplesIf}
 }

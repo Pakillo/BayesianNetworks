@@ -5,11 +5,12 @@
 #' @param param character. Name of the parameter to retrieve the posterior samples.
 #'
 #' @return A data frame
+#' @importFrom rlang parse_exprs !!!
 #' @export
 #'
 #' @examplesIf interactive()
 #' data(web)
-#' dt <- prepare_data(mat = web, sampl.eff = rep(20, nrow(web)))
+#' dt <- prepare_data(mat = web, plant_effort = rep(20, nrow(web)))
 #' fit <- fit_model(dt, refresh = 0)
 #' get_posterior(fit, dt, param = "connectance")
 #'
@@ -29,64 +30,57 @@ get_posterior <- function(fit = NULL,
                                     "animal.abund",
                                     "int.prob",
                                     "link")) {
-
-  # r = avg. visits from mutualists (preference)
-  # rho = connectance
-  # sigma = plant.abund
-  # tau = animal.abund
-  # Q = interaction probability
-
+  ## parse arguments & construct parameter set to extract
   param <- match.arg(param)
-
-  params_all <- function(fit) {
-    if (fit$metadata()$model_name == "varying_preferences_model") {
-      out <- tidybayes::spread_draws(fit, rho, r[Animal], sigma[Plant], tau[Animal], Q[Plant, Animal])
-    } else {
-      out <- tidybayes::spread_draws(fit, rho, r, sigma[Plant], tau[Animal], Q[Plant, Animal])
-    }
-    return(out)
+  all_vars <- tidybayes::get_variables(fit)
+  if (sum(grepl("^r(\\[\\d+\\])?$", all_vars)) >= 1) {
+    sel_r <- "r[Animal]"
+  } else {
+    sel_r <- "r"
   }
-
-  params_preference <- function(fit) {
-    if (fit$metadata()$model_name == "varying_preferences_model") {
-      out <- tidybayes::spread_draws(fit, r[Animal])
-    } else {
-      out <- tidybayes::spread_draws(fit, r)
-    }
-    return(out)
+  if (sum(grepl("^sigma", all_vars)) > 1) {
+    sel_sigma <- "sigma[Plant]"
+  } else if (sum(grepl("^sigma", all_vars)) == 1) {
+    sel_sigma <- "sigma"
+  } else {
+    sel_sigma <- NULL
   }
-
+  if (sum(grepl("^tau", all_vars)) > 1) {
+    sel_tau <- "tau[Animal]"
+  } else if (sum(grepl("^tau", all_vars)) == 1) {
+    sel_tau <- "tau"
+  } else {
+    sel_tau <- NULL
+  }
 
   post <- switch(
     param,
-    all = params_all(fit),
+    all = tidybayes::spread_draws(fit, !!!rlang::parse_exprs(c("rho", sel_r, sel_sigma,
+                                                               sel_tau, "Q[Plant, Animal]"))),
     connectance = tidybayes::spread_draws(fit, rho),
-    preference = params_preference(fit),
-    plant.abund = tidybayes::spread_draws(fit, sigma[Plant]),
-    animal.abund = tidybayes::spread_draws(fit, tau[Animal]),
-    int.prob = tidybayes::spread_draws(fit, Q[Plant, Animal]),
+    preference = tidybayes::spread_draws(fit, !!!rlang::parse_exprs(sel_r)),
+    plant_abund = tidybayes::spread_draws(fit, !!!rlang::parse_exprs(sel_sigma)),
+    animal_abund = tidybayes::spread_draws(fit, !!!rlang::parse_exprs(sel_tau)),
+    int_prob = tidybayes::spread_draws(fit, Q[Plant, Animal]),
     link = tidybayes::spread_draws(fit, Q[Plant, Animal]),
   )
 
   # use more informative names
-  param.names <- c(
+  param_names <- c(
     connectance = "rho",
     preference = "r",
-    plant.abund = "sigma",
-    animal.abund = "tau",
-    int.prob = "Q")
+    plant_abund = "sigma",
+    animal_abund = "tau",
+    int_prob = "Q")
 
-  post <- dplyr::rename(post, dplyr::any_of(param.names))
+  post <- dplyr::rename(post, dplyr::any_of(param_names))
 
   ## generate posteriors of link existence
   if (param == "all" | param == "link") {
     post <- is_there_link(post)
   }
 
-
-
   ## rename plants and animals with original labels
-
   if ("Animal" %in% names(post)) {
     animals <- data.frame(Animal = 1:ncol(data$M), Animal.name = colnames(data$M))
     post <- post |>
@@ -102,6 +96,4 @@ get_posterior <- function(fit = NULL,
   }
 
   return(post)
-
-
 }

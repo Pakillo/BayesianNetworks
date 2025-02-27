@@ -33,7 +33,7 @@ get_posterior <- function(fit = NULL,
   ## parse arguments & construct parameter set to extract
   param <- match.arg(param)
   all_vars <- tidybayes::get_variables(fit)
-  if (sum(grepl("^r(\\[\\d+\\])?$", all_vars)) > 1) {
+  if (sum(grepl("^r(\\[\\d+\\])?$", all_vars)) >= 1) {
     sel_r <- "r[Animal]"
   } else {
     sel_r <- "r"
@@ -59,9 +59,9 @@ get_posterior <- function(fit = NULL,
                                                                sel_tau, "Q[Plant, Animal]"))),
     connectance = tidybayes::spread_draws(fit, rho),
     preference = tidybayes::spread_draws(fit, !!!rlang::parse_exprs(sel_r)),
-    plant.abund = tidybayes::spread_draws(fit, !!!rlang::parse_exprs(sel_sigma)),
-    animal.abund = tidybayes::spread_draws(fit, !!!rlang::parse_exprs(sel_tau)),
-    int.prob = tidybayes::spread_draws(fit, Q[Plant, Animal]),
+    plant_abund = tidybayes::spread_draws(fit, !!!rlang::parse_exprs(sel_sigma)),
+    animal_abund = tidybayes::spread_draws(fit, !!!rlang::parse_exprs(sel_tau)),
+    int_prob = tidybayes::spread_draws(fit, Q[Plant, Animal]),
     link = tidybayes::spread_draws(fit, Q[Plant, Animal]),
   )
 

@@ -45,7 +45,7 @@ prepare_data <- function(mat, plant_effort = NULL, plant_abun = NULL, animal_abu
 
   ## Prepare data list, dropping NULL elements
   dt <- list(M = mat, n_p = nrow(mat), n_a = ncol(mat), C = plant_effort,
-             abs_sigma = plant_abun, abs_tau = animal_abun)
+             abun_p = plant_abun, abun_a = animal_abun)
   dt <- Filter(Negate(is.null), dt)
   return(dt)
 }
